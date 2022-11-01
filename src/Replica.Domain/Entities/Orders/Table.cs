@@ -1,10 +1,10 @@
 ﻿using Replica.Domain.Entities.Base;
 
-namespace Replica.Domain.Entities.Rent
+namespace Replica.Domain.Entities.Orders
 {
-    public class GameZone : EntityBase
+    public class Table : EntityBase
     {
-        public string Name { get; set; }
+        public int TableNumber { get; set; }
 
         public string Description { get; set; }
 

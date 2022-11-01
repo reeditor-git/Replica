@@ -4,6 +4,6 @@
     {
         public bool AdditionalHose { get; set; }
 
-        public int MyProperty { get; set; }
+        public ICollection<HookahComponent> Components { get; set; }
     }
 }
