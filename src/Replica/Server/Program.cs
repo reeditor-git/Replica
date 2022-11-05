@@ -1,4 +1,6 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using Replica.Application.Interfaces;
+using Replica.Persistence;
 
 namespace Replica
 {
@@ -9,6 +11,11 @@ namespace Replica
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var connectionString = builder.Configuration.GetConnectionString("ReplicaDataBase");
+
+            builder.Services.AddDbContext<IReplicaDbContext, ReplicaDbContext>(options =>
+            options.UseSqlServer(connectionString,
+            x => x.MigrationsAssembly("Replica.Persistence")));
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

@@ -10,8 +10,6 @@ namespace Replica.Domain.Entities.Orders
 
         public decimal Price { get; set; }
 
-        public Category Category { get; set; }
-
         public Subcategory Subcategory { get; set; }
     }
 }

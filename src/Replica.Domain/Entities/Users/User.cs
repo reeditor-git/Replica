@@ -18,8 +18,6 @@ namespace Replica.Domain.Entities.Users
         public string Password { get; set; }
 
         public UserRole Role { get; set; }
-       
-        public UserRefreshToken RefreshToken { get; set; }
 
         public ICollection<Order>? Orders { get; set; }
     }

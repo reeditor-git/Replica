@@ -1,6 +1,8 @@
-﻿namespace Replica.Domain.Entities.Hookahs
+﻿using Replica.Domain.Entities.Base;
+
+namespace Replica.Domain.Entities.Hookahs
 {
-    public class Hookah
+    public class Hookah : EntityBase
     {
         public bool AdditionalHose { get; set; }
 
