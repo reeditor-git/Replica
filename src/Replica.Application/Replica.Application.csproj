@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Replica.Domain\Replica.Domain.csproj" />
+    <ProjectReference Include="..\Replica\Shared\Replica.DTO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\Users\" />
   </ItemGroup>
 
 </Project>
