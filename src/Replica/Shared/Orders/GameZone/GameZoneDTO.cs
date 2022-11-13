@@ -1,8 +1,6 @@
-﻿using Replica.Domain.Entities.Base;
-
-namespace Replica.Domain.Entities.Orders
+﻿namespace Replica.DTO.Orders.GameZone
 {
-    public class GameZone : EntityBase
+    public class GameZoneDTO : DTOBase
     {
         public string Name { get; set; }
 
@@ -11,7 +9,5 @@ namespace Replica.Domain.Entities.Orders
         public bool Available { get; set; }
 
         public int SeatingCapacity { get; set; }
-
-        public string Image { get; set; }
     }
 }

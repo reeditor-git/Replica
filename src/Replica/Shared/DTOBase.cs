@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Replica.DTO.Hookahs
+namespace Replica.DTO
 {
-    public class HookahDTO
+    public class DTOBase
     {
+        public Guid Id { get; set; }
     }
 }

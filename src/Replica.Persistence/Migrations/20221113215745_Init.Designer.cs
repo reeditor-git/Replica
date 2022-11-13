@@ -12,17 +12,18 @@ using Replica.Persistence;
 namespace Replica.Persistence.Migrations
 {
     [DbContext(typeof(ReplicaDbContext))]
-    [Migration("20221105124534_Init")]
+    [Migration("20221113215745_Init")]
     partial class Init
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Replica.Domain.Entities.Hookahs.ComponentCategory", b =>
                 {
@@ -70,6 +71,10 @@ namespace Replica.Persistence.Migrations
                     b.Property<Guid?>("HookahId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,6 +116,10 @@ namespace Replica.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -163,6 +172,10 @@ namespace Replica.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -221,6 +234,10 @@ namespace Replica.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SeatingCapacity")
                         .HasColumnType("int");
 
@@ -246,6 +263,10 @@ namespace Replica.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -262,15 +283,10 @@ namespace Replica.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RefreshTokenId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RefreshTokenId");
 
                     b.HasIndex("RoleId");
 
@@ -290,7 +306,12 @@ namespace Replica.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -383,21 +404,24 @@ namespace Replica.Persistence.Migrations
 
             modelBuilder.Entity("Replica.Domain.Entities.Users.User", b =>
                 {
-                    b.HasOne("Replica.Domain.Entities.Users.UserRefreshToken", "RefreshToken")
-                        .WithMany()
-                        .HasForeignKey("RefreshTokenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Replica.Domain.Entities.Users.UserRole", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RefreshToken");
-
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Users.UserRefreshToken", b =>
+                {
+                    b.HasOne("Replica.Domain.Entities.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Replica.Domain.Entities.Hookahs.ComponentCategory", b =>

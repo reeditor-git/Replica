@@ -1,39 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.DTO.Orders.Category;
-using Replica.Server.Controllers.Base;
+using Replica.Application.Repository.Orders;
+using Replica.DTO.Orders.GameZone;
 
 namespace Replica.Server.Controllers.Orders
 {
-    public class GameZoneController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class GameZoneController : ControllerBase
     {
-        [HttpGet("[action]")]
-        //[Authorize(Roles = "")]
-        public async Task<ActionResult> Get()
+        protected readonly GameZoneRepository _repository;
+        public GameZoneController(GameZoneRepository repository) => _repository = repository;
+
+        [HttpPost]
+        public async Task<GameZoneDTO> Create(GameZoneDTO entity)
         {
-            return Ok();
+            return await _repository.Create(entity);
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult> GetAll()
+        [HttpDelete("{id}")]
+        public async Task<GameZoneDTO> Delete(Guid id)
         {
-            return Ok();
+            return await _repository.Delete(id);
         }
-        [HttpPost]
-        public async Task<ActionResult> Create()
+
+        [HttpGet("{id}")]
+        public async Task<GameZoneDTO> Get(Guid id)
         {
-            return Ok();
+            return await _repository.Get(id);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<GameZoneDTO>> GetAll()
+        {
+            return await _repository.GetAll();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update()
+        public async Task<GameZoneDTO> Update(GameZoneDTO entity)
         {
-            return Ok();
-        }
-
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
-        {
-            return Ok();
+            return await _repository.Update(entity);
         }
     }
 }

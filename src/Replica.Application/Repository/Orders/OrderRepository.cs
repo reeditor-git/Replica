@@ -1,33 +1,89 @@
-﻿using Replica.Application.Interfaces;
-using Replica.DTO.Orders;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Replica.Application.Interfaces;
+using Replica.Application.Repository.Base;
+using Replica.Domain.Entities.Orders;
+using Replica.DTO.Orders.Order;
 
 namespace Replica.Application.Repository.Orders
 {
-    public class OrderRepository : IRepository<OrderDTO>
+    public class OrderRepository : RepositoryBase
     {
-        public void Create(OrderDTO entity)
+        public OrderRepository(IReplicaDbContext dbContext, IMapper mapper)
+            : base(dbContext, mapper) { }
+
+        public async Task<OrderDTO> Create(OrderDTO entity)
         {
-            throw new NotImplementedException();
+            var order = new Order()
+            {
+                User = await _dbContext.Users.FindAsync(entity.UserId),
+                Table = await _dbContext.Tables.FindAsync(entity.Table.Id),
+                GameZone = await _dbContext.GameZones.FindAsync(entity.GameZone.Id),
+                Comment = entity.Comment
+            };
+
+            foreach (var product in entity.Products)
+            {
+                order.Products.Add(await _dbContext.Products.FindAsync(product.Id));
+            }
+
+            foreach (var hookah in entity.Hookahs)
+            {
+                order.Hookahs.Add(await _dbContext.Hookahs.FindAsync(hookah.Id));
+            }
+
+            await _dbContext.Orders.AddAsync(order);
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<OrderDTO>(order);
         }
 
-        public void Delete(OrderDTO entity)
+        public async Task<OrderDTO> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var order = await _dbContext.Orders.FindAsync(id);
+            if(order != null)
+                _dbContext.Orders.Remove(order);
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<OrderDTO>(order);
         }
 
-        public OrderDTO Get(int id)
+        public async Task<OrderDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var orders = await _dbContext.Orders.FindAsync(id);
+
+            return _mapper.Map<OrderDTO>(orders);
         }
 
-        public IEnumerable<OrderDTO> GetAll()
+        public async Task<IEnumerable<OrderDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<Order> orders = await _dbContext.Orders.ToListAsync();
+
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
-        public void Update(OrderDTO entity)
+        public async Task<OrderDTO> Update(OrderDTO entity)
         {
-            throw new NotImplementedException();
+            var order = await _dbContext.Orders.FindAsync(entity.Id);
+
+            if(order != null)
+            {
+                order.User = await _dbContext.Users.FindAsync(entity.UserId);
+                order.Table = await _dbContext.Tables.FindAsync(entity.Table.Id);
+                order.GameZone = await _dbContext.GameZones.FindAsync(entity.GameZone.Id);
+                order.Comment = entity.Comment;
+            }
+            foreach (var product in entity.Products)
+            {
+                order.Products.Add(await _dbContext.Products.FindAsync(product.Id));
+            }
+
+            foreach (var hookah in entity.Hookahs)
+            {
+                order.Hookahs.Add(await _dbContext.Hookahs.FindAsync(hookah.Id));
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<OrderDTO>(order);
         }
     }
 }

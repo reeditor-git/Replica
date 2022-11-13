@@ -1,33 +1,65 @@
-﻿using Replica.Application.Interfaces;
-using Replica.DTO.Hookahs;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Replica.Application.Interfaces;
+using Replica.Application.Repository.Base;
+using Replica.Domain.Entities.Hookahs;
+using Replica.DTO.Hookahs.ComponentCategory;
+using System.Threading;
 
 namespace Replica.Application.Repository.Hookahs
 {
-    public class ComponentCategoryRepository : IRepository<ComponentCategoryDTO>
+    public class ComponentCategoryRepository : RepositoryBase
     {
-        public void Create(ComponentCategoryDTO entity)
+        public ComponentCategoryRepository(IReplicaDbContext dbContext, IMapper mapper)
+            : base(dbContext, mapper) { }
+
+        public async Task<ComponentCategoryDTO> Create(ShortComponentCategoryDTO entity)
         {
-            throw new NotImplementedException();
+            var componentCategory = new ComponentCategory()
+            {
+                Name = entity.Name
+            };
+
+            await _dbContext.ComponentCategories.AddAsync(componentCategory);
+            await _dbContext.SaveChangesAsync();
+
+            return _mapper.Map<ComponentCategoryDTO>(componentCategory);
         }
 
-        public void Delete(ComponentCategoryDTO entity)
+        public async Task<ComponentCategoryDTO> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var componentCategory = await _dbContext.ComponentCategories.FindAsync(id);
+            if (componentCategory != null)
+                _dbContext.ComponentCategories.Remove(componentCategory);
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<ComponentCategoryDTO>(componentCategory);
         }
 
-        public ComponentCategoryDTO Get(int id)
+        public async Task<ComponentCategoryDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var componentCategory = await _dbContext.ComponentCategories.FindAsync(id);
+
+            return _mapper.Map<ComponentCategoryDTO>(componentCategory);
         }
 
-        public IEnumerable<ComponentCategoryDTO> GetAll()
+        public async Task<IEnumerable<ComponentCategoryDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<ComponentCategory> 
+                componentCategorys = await _dbContext.ComponentCategories.ToListAsync();
+
+            return _mapper.Map<IEnumerable<ComponentCategoryDTO>>(componentCategorys);
         }
 
-        public void Update(ComponentCategoryDTO entity)
+        public async Task<ComponentCategoryDTO> Update(ShortComponentCategoryDTO entity)
         {
-            throw new NotImplementedException();
+            var componentCategory = await _dbContext.ComponentCategories.FindAsync(entity.Id);
+            
+            if(componentCategory != null)
+                componentCategory.Name = entity.Name;
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<ComponentCategoryDTO>(componentCategory);
         }
     }
 }

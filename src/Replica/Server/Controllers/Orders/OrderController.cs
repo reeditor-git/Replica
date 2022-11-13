@@ -1,38 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Server.Controllers.Base;
+using Replica.Application.Repository.Orders;
+using Replica.DTO.Orders.Order;
 
 namespace Replica.Server.Controllers.Orders
 {
-    public class OrderController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class OrderController : ControllerBase
     {
-        [HttpGet("[action]")]
-        //[Authorize(Roles = "")]
-        public async Task<ActionResult> Get()
+        protected readonly OrderRepository _repository;
+        public OrderController(OrderRepository repository) => _repository = repository;
+
+        [HttpPost]
+        public async Task<OrderDTO> Create(OrderDTO entity)
         {
-            return Ok();
+            return await _repository.Create(entity);
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult> GetAll()
+        [HttpDelete("{id}")]
+        public async Task<OrderDTO> Delete(Guid id)
         {
-            return Ok();
+            return await _repository.Delete(id);
         }
-        [HttpPost]
-        public async Task<ActionResult> Create()
+
+        [HttpGet("{id}")]
+        public async Task<OrderDTO> Get(Guid id)
         {
-            return Ok();
+            return await _repository.Get(id);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<OrderDTO>> GetAll()
+        {
+            return await _repository.GetAll();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update()
+        public async Task<OrderDTO> Update(OrderDTO entity)
         {
-            return Ok();
-        }
-
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
-        {
-            return Ok();
+            return await _repository.Update(entity);
         }
     }
 }

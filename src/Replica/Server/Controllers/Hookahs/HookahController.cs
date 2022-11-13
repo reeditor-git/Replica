@@ -1,38 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Server.Controllers.Base;
+using Replica.Application.Repository.Hookahs;
+using Replica.DTO.Hookahs.Hookah;
 
 namespace Replica.Server.Controllers.Hookahs
 {
-    public class HookahController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class HookahController : ControllerBase
     {
-        [HttpGet("[action]")]
-        //[Authorize(Roles = "")]
-        public async Task<ActionResult> Get()
+        private readonly HookahRepository _repository;
+        public HookahController(HookahRepository repository) => _repository = repository;
+
+        [HttpPost]
+        public async Task<HookahDTO> Create([FromBody] HookahDTO entity)
         {
-            return Ok();
+            return await _repository.Create(entity);
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult> GetAll()
+        [HttpDelete("{id}")]
+        public async Task<HookahDTO> Delete(Guid id)
         {
-            return Ok();
+            return await _repository.Delete(id);
         }
-        [HttpPost]
-        public async Task<ActionResult> Create()
+
+        [HttpGet("{id}")]
+        public async Task<HookahDTO> Get(Guid id)
         {
-            return Ok();
+            return await _repository.Get(id);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<HookahDTO>> GetAll()
+        {
+            return await _repository.GetAll();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update()
+        public async Task<HookahDTO> Update([FromBody] HookahDTO entity)
         {
-            return Ok();
-        }
-
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
-        {
-            return Ok();
+            return await _repository.Update(entity);
         }
     }
 }

@@ -1,10 +1,15 @@
-﻿using Replica.Application.Interfaces;
+﻿using AutoMapper;
+using Replica.Application.Interfaces;
+using Replica.Application.Repository.Base;
 using Replica.DTO.Orders;
 
 namespace Replica.Application.Repository.Orders
 {
-    public class ProductRepository : IRepository<ProductDTO>
+    public class ProductRepository : RepositoryBase
     {
+        public ProductRepository(IReplicaDbContext dbContext, IMapper mapper)
+            : base(dbContext, mapper) { }
+
         public void Create(ProductDTO entity)
         {
             throw new NotImplementedException();

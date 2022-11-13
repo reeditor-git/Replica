@@ -1,5 +1,9 @@
-﻿using Replica.Application.Interfaces;
-using Replica.DTO.Orders;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Replica.Application.Interfaces;
+using Replica.Application.Repository.Base;
+using Replica.Domain.Entities.Orders;
+using Replica.DTO.Orders.GameZone;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,31 +12,62 @@ using System.Threading.Tasks;
 
 namespace Replica.Application.Repository.Orders
 {
-    public class GameZoneRepository : IRepository<GameZoneDTO>
+    public class GameZoneRepository : RepositoryBase
     {
-        public void Create(GameZoneDTO entity)
+        public GameZoneRepository(IReplicaDbContext dbContext, IMapper mapper)
+            : base(dbContext, mapper) { }
+
+        public async Task<GameZoneDTO> Create(GameZoneDTO entity)
         {
-            throw new NotImplementedException();
+            var gameZone = new GameZone()
+            {
+                Name = entity.Name,
+                Description = entity.Description,
+                Available = entity.Available,
+                SeatingCapacity = entity.SeatingCapacity
+            };
+
+            await _dbContext.GameZones.AddAsync(gameZone);
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<GameZoneDTO>(gameZone);
         }
 
-        public void Delete(GameZoneDTO entity)
+        public async Task<GameZoneDTO> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var gameZone = await _dbContext.GameZones.FindAsync(id);
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<GameZoneDTO>(gameZone);
         }
 
-        public GameZoneDTO Get(int id)
+        public async Task<GameZoneDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var gameZone = await _dbContext.GameZones.FindAsync(id);
+
+            return _mapper.Map<GameZoneDTO>(gameZone);
         }
 
-        public IEnumerable<GameZoneDTO> GetAll()
+        public async Task<IEnumerable<GameZoneDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<GameZone> gameZones = await _dbContext.GameZones.ToListAsync();
+
+            return _mapper.Map<IEnumerable<GameZoneDTO>>(gameZones);
         }
 
-        public void Update(GameZoneDTO entity)
+        public async Task<GameZoneDTO> Update(GameZoneDTO entity)
         {
-            throw new NotImplementedException();
+            var gameZone = await _dbContext.GameZones.FindAsync(entity.Id);
+
+            if(gameZone != null)
+            {
+                gameZone.Name = entity.Name;
+                gameZone.Description = entity.Description;
+                gameZone.Available = entity.Available;
+                gameZone.SeatingCapacity = entity.SeatingCapacity;
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<GameZoneDTO>(gameZone);
         }
     }
 }

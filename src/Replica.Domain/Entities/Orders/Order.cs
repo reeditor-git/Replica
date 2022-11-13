@@ -14,7 +14,7 @@ namespace Replica.Domain.Entities.Orders
 
         public ICollection<Product>? Products { get; set; }
 
-        public ICollection<Hookah> Hookahs { get; set; }
+        public ICollection<Hookah>? Hookahs { get; set; }
 
         public string Comment { get; set; }
     }

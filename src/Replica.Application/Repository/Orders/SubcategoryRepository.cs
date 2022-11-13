@@ -1,10 +1,15 @@
-﻿using Replica.Application.Interfaces;
+﻿using AutoMapper;
+using Replica.Application.Interfaces;
+using Replica.Application.Repository.Base;
 using Replica.DTO.Orders;
 
 namespace Replica.Application.Repository.Orders
 {
-    public class SubcategoryRepository : IRepository<SubcategoryDTO>
+    public class SubcategoryRepository : RepositoryBase
     {
+        public SubcategoryRepository(IReplicaDbContext dbContext, IMapper mapper)
+            : base(dbContext, mapper) { }
+
         public void Create(SubcategoryDTO entity)
         {
             throw new NotImplementedException();

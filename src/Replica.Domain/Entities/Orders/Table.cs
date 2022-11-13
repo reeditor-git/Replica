@@ -11,5 +11,7 @@ namespace Replica.Domain.Entities.Orders
         public bool Available { get; set; }
 
         public int SeatingCapacity { get; set; }
+
+        public string Image { get; set; }
     }
 }

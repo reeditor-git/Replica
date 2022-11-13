@@ -11,5 +11,7 @@ namespace Replica.Domain.Entities.Orders
         public decimal Price { get; set; }
 
         public Subcategory Subcategory { get; set; }
+
+        public string Image { get; set; }
     }
 }

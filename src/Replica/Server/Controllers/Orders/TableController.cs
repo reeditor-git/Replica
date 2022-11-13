@@ -1,36 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Server.Controllers.Base;
 
 namespace Replica.Server.Controllers.Orders
 {
-    public class TableController : ApiController
+    public class TableController : ControllerBase
     {
-        [HttpGet("[action]")]
-        //[Authorize(Roles = "")]
-        public async Task<ActionResult> Get()
-        {
-            return Ok();
-        }
-
-        [HttpGet("[action]")]
-        public async Task<ActionResult> GetAll()
-        {
-            return Ok();
-        }
         [HttpPost]
         public async Task<ActionResult> Create()
         {
             return Ok();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update()
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete()
         {
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get()
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAll()
+        {
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update()
         {
             return Ok();
         }

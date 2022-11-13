@@ -20,5 +20,7 @@ namespace Replica.Domain.Entities.Users
         public UserRole Role { get; set; }
 
         public ICollection<Order>? Orders { get; set; }
+
+        public string Image { get; set; }
     }
 }

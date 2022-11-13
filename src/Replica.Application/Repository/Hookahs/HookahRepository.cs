@@ -1,33 +1,76 @@
-﻿using Replica.Application.Interfaces;
-using Replica.DTO.Hookahs;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Replica.Application.Interfaces;
+using Replica.Application.Repository.Base;
+using Replica.Domain.Entities.Hookahs;
+using Replica.DTO.Hookahs.Hookah;
 
 namespace Replica.Application.Repository.Hookahs
 {
-    public class HookahRepository : IRepository<HookahDTO>
+    public class HookahRepository : RepositoryBase
     {
-        public void Create(HookahDTO entity)
+        public HookahRepository(IReplicaDbContext dbContext, IMapper mapper)
+            : base(dbContext, mapper) { }
+
+        public async Task<HookahDTO> Create(HookahDTO entity)
         {
-            throw new NotImplementedException();
+            var hookah = new Hookah()
+            {
+                AdditionalHose = entity.AdditionalHose
+            };
+
+            foreach (var component in entity.Components)
+            {
+                hookah.Components.Add(await _dbContext.HookahComponents.FindAsync(component.Id));
+            }
+
+            await _dbContext.Hookahs.AddAsync(hookah);
+            await _dbContext.SaveChangesAsync();
+
+            return _mapper.Map<HookahDTO>(hookah);
         }
 
-        public void Delete(HookahDTO entity)
+        public async Task<HookahDTO> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var hookah = await _dbContext.Hookahs.FindAsync(id);
+            if (hookah != null)
+                _dbContext.Hookahs.Remove(hookah);
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<HookahDTO>(hookah);
         }
 
-        public HookahDTO Get(int id)
+        public async Task<HookahDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var hookah = await _dbContext.Hookahs.FindAsync(id);
+
+            return _mapper.Map<HookahDTO>(hookah);
         }
 
-        public IEnumerable<HookahDTO> GetAll()
+        public async Task<IEnumerable<HookahDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<Hookah>
+                hookah = await _dbContext.Hookahs.ToListAsync();
+
+            return _mapper.Map<IEnumerable<HookahDTO>>(hookah);
         }
 
-        public void Update(HookahDTO entity)
+        public async Task<HookahDTO> Update(HookahDTO entity)
         {
-            throw new NotImplementedException();
+            var hookah = await _dbContext.Hookahs.FindAsync(entity.Id);
+
+            if (hookah != null)
+            {
+                hookah.AdditionalHose = entity.AdditionalHose;
+                hookah.Components.Clear();
+            }
+            foreach (var component in entity.Components)
+            {
+                hookah.Components.Add(await _dbContext.HookahComponents.FindAsync(component.Id));
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<HookahDTO>(hookah);
         }
     }
 }
