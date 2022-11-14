@@ -1,37 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Replica.Application.Repository.Orders;
+using Replica.DTO.Orders;
 
 namespace Replica.Server.Controllers.Orders
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class TableController : ControllerBase
     {
+        protected readonly TableRepository _repository;
+        public TableController(TableRepository repository) => _repository = repository;
+
         [HttpPost]
-        public async Task<ActionResult> Create()
+        public async Task<TableDTO> Create(TableDTO entity)
         {
-            return Ok();
+            return await _repository.Create(entity);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete()
+        public async Task<TableDTO> Delete(Guid id)
         {
-            return Ok();
+            return await _repository.Delete(id);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get()
+        public async Task<TableDTO> Get(Guid id)
         {
-            return Ok();
+            return await _repository.Get(id);
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<IEnumerable<TableDTO>> GetAll()
         {
-            return Ok();
+            return await _repository.GetAll();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update()
+        public async Task<TableDTO> Update(TableDTO entity)
         {
-            return Ok();
+            return await _repository.Update(entity);
         }
     }
 }

@@ -10,27 +10,27 @@ namespace Replica.Application.Repository.Orders
         public ProductRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public void Create(ProductDTO entity)
+        public async Task<ProductDTO> Create(ProductDTO entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(ProductDTO entity)
+        public async Task<ProductDTO> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public ProductDTO Get(int id)
+        public async Task<ProductDTO> Get(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProductDTO> GetAll()
+        public async Task<IEnumerable<ProductDTO>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ProductDTO entity)
+        public async Task<ProductDTO> Update(ProductDTO entity)
         {
             throw new NotImplementedException();
         }

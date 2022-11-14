@@ -10,27 +10,27 @@ namespace Replica.Application.Repository.Orders
         public SubcategoryRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public void Create(SubcategoryDTO entity)
+        public async Task<SubcategoryDTO> Create(SubcategoryDTO entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(SubcategoryDTO entity)
+        public async Task<SubcategoryDTO> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public SubcategoryDTO Get(int id)
+        public async Task<SubcategoryDTO> Get(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SubcategoryDTO> GetAll()
+        public async Task<IEnumerable<SubcategoryDTO>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(SubcategoryDTO entity)
+        public async Task<SubcategoryDTO> Update(SubcategoryDTO entity)
         {
             throw new NotImplementedException();
         }

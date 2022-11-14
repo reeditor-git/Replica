@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Replica.Application.Interfaces;
+using Replica.Application.Profiles;
 using Replica.Application.Repository.Hookahs;
+using Replica.Application.Repository.Orders;
 using Replica.Persistence;
 using System.Reflection;
 
@@ -20,16 +22,18 @@ namespace Replica
             options.UseSqlServer(connectionString,
             x => x.MigrationsAssembly("Replica.Persistence")));
 
-            builder.Services.AddAutoMapper(config =>
-                {
-                   // config.AddProfile(new AssemblyMappingProfile(typeof(IReplicaDbContext).Assembly));
-                });
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             builder.Services.AddScoped<ComponentCategoryRepository>();
             builder.Services.AddScoped<HookahComponentRepository>();
             builder.Services.AddScoped<HookahRepository>();
 
-
+            builder.Services.AddScoped<CategoryRepository>();
+            builder.Services.AddScoped<GameZoneRepository>();
+            builder.Services.AddScoped<OrderRepository>();
+            builder.Services.AddScoped<ProductRepository>();
+            builder.Services.AddScoped<SubcategoryRepository>();
+            builder.Services.AddScoped<TableRepository>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
