@@ -1,24 +1,24 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
-using Replica.Application.Repository.Base;
+using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Hookahs;
 using Replica.DTO.Hookahs.HookahComponent;
 
-namespace Replica.Application.Repository.Hookahs
+namespace Replica.Application.Repositories.Hookahs
 {
     public class HookahComponentRepository : RepositoryBase
     {
         public HookahComponentRepository(IReplicaDbContext dbContext, IMapper mapper) 
             : base(dbContext, mapper) { }
 
-        public async Task<HookahComponentDTO> Create(HookahComponentDTO entity)
+        public async Task<HookahComponentDTO> Create(CreateHookahComponentDTO entity)
         {
             var hookahComponent = new HookahComponent()
             {
                 Name = entity.Name,
                 Price = entity.Price,
-                Category = await _dbContext.ComponentCategories.FindAsync(entity.Category.Id)
+                Category = await _dbContext.ComponentCategories.FindAsync(entity.CategoryId)
             };
 
             await _dbContext.HookahComponents.AddAsync(hookahComponent);

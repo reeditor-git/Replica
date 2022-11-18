@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
-using Replica.Application.Repository.Base;
+using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
 using Replica.DTO.Orders.Order;
 
-namespace Replica.Application.Repository.Orders
+namespace Replica.Application.Repositories.Orders
 {
     public class OrderRepository : RepositoryBase
     {
@@ -40,6 +40,7 @@ namespace Replica.Application.Repository.Orders
         public async Task<OrderDTO> Delete(Guid id)
         {
             var order = await _dbContext.Orders.FindAsync(id);
+
             if(order != null)
                 _dbContext.Orders.Remove(order);
 

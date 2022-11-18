@@ -1,11 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Replica.Application.Interfaces;
 using Replica.Application.Profiles;
-using Replica.Application.Repository.Hookahs;
-using Replica.Application.Repository.Orders;
+using Replica.Application.Repositories.Hookahs;
+using Replica.Application.Repositories.Orders;
 using Replica.Persistence;
-using System.Reflection;
 
 namespace Replica
 {

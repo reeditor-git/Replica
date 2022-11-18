@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repository.Orders;
-using Replica.DTO.Orders;
+using Replica.Application.Repositories.Orders;
+using Replica.DTO.Orders.Subcategory;
 
 namespace Replica.Server.Controllers.Orders
 {
@@ -11,31 +11,31 @@ namespace Replica.Server.Controllers.Orders
         protected readonly SubcategoryRepository _repository;
         public SubcategoryController(SubcategoryRepository repository) => _repository = repository;
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<SubcategoryDTO> Create(SubcategoryDTO entity)
         {
             return await _repository.Create(entity);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<SubcategoryDTO> Delete(Guid id)
         {
             return await _repository.Delete(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<SubcategoryDTO> Get(Guid id)
         {
             return await _repository.Get(id);
         }
 
-        [HttpGet]
+        [HttpGet("get-all")]
         public async Task<IEnumerable<SubcategoryDTO>> GetAll()
         {
             return await _repository.GetAll();
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<SubcategoryDTO> Update(SubcategoryDTO entity)
         {
             return await _repository.Update(entity);

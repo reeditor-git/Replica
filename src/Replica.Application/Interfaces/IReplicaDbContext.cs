@@ -2,11 +2,6 @@
 using Replica.Domain.Entities.Hookahs;
 using Replica.Domain.Entities.Orders;
 using Replica.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Replica.Application.Interfaces
 {

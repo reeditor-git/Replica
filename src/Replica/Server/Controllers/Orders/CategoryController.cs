@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repository.Orders;
+using Replica.Application.Repositories.Orders;
 using Replica.DTO.Orders.Category;
 
 namespace Replica.Server.Controllers.Orders
@@ -12,32 +12,38 @@ namespace Replica.Server.Controllers.Orders
 
         public CategoryController(CategoryRepository repository) => _repository = repository;
 
-        [HttpPost]
-        public async Task<CategoryDTO> Create(CategoryDTO entity)
+        [HttpPost("create")]
+        public async Task<ShortCategoryDTO> Create(CreateCategoryDTO entity)
         {
             return await _repository.Create(entity);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<CategoryDTO> Delete(Guid id)
+        [HttpDelete("delete/{id}")]
+        public async Task<ShortCategoryDTO> Delete(Guid id)
         {
             return await _repository.Delete(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<CategoryDTO> Get(Guid id)
         {
             return await _repository.Get(id);
         }
 
-        [HttpGet]
+        [HttpGet("get-all")]
         public async Task<IEnumerable<CategoryDTO>> GetAll()
         {
             return await _repository.GetAll();
         }
 
-        [HttpPut]
-        public async Task<CategoryDTO> Update(CategoryDTO entity)
+        [HttpGet("get-all-short")]
+        public async Task<IEnumerable<ShortCategoryDTO>> GetAllShort()
+        {
+            return await _repository.GetAllShort();
+        }
+
+        [HttpPut("update")]
+        public async Task<ShortCategoryDTO> Update(ShortCategoryDTO entity)
         {
             return await _repository.Update(entity);
         }

@@ -1,4 +1,6 @@
-﻿namespace Replica.DTO.Hookahs.ComponentCategory
+﻿using Replica.DTO.Base;
+
+namespace Replica.DTO.Hookahs.ComponentCategory
 {
     public class ShortComponentCategoryDTO : DTOBase
     {

@@ -1,4 +1,6 @@
-﻿namespace Replica.DTO.Orders
+﻿using Replica.DTO.Base;
+
+namespace Replica.DTO.Orders.Table
 {
     public class TableDTO : DTOBase
     {

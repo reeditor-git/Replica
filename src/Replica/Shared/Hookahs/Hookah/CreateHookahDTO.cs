@@ -1,9 +1,8 @@
-﻿using Replica.DTO.Base;
-using Replica.DTO.Hookahs.HookahComponent;
+﻿using Replica.DTO.Hookahs.HookahComponent;
 
 namespace Replica.DTO.Hookahs.Hookah
 {
-    public class HookahDTO : DTOBase
+    public class CreateHookahDTO
     {
         public bool AdditionalHose { get; set; }
 

@@ -1,5 +1,8 @@
-﻿using Replica.DTO.Hookahs.Hookah;
+﻿using Replica.DTO.Base;
+using Replica.DTO.Hookahs.Hookah;
 using Replica.DTO.Orders.GameZone;
+using Replica.DTO.Orders.Product;
+using Replica.DTO.Orders.Table;
 
 namespace Replica.DTO.Orders.Order
 {

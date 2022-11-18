@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repository.Orders;
+using Replica.Application.Repositories.Orders;
 using Replica.DTO.Orders.Order;
 
 namespace Replica.Server.Controllers.Orders
@@ -11,31 +11,31 @@ namespace Replica.Server.Controllers.Orders
         protected readonly OrderRepository _repository;
         public OrderController(OrderRepository repository) => _repository = repository;
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<OrderDTO> Create(OrderDTO entity)
         {
             return await _repository.Create(entity);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<OrderDTO> Delete(Guid id)
         {
             return await _repository.Delete(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<OrderDTO> Get(Guid id)
         {
             return await _repository.Get(id);
         }
 
-        [HttpGet]
+        [HttpGet("get-all")]
         public async Task<IEnumerable<OrderDTO>> GetAll()
         {
             return await _repository.GetAll();
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<OrderDTO> Update(OrderDTO entity)
         {
             return await _repository.Update(entity);

@@ -1,4 +1,5 @@
-﻿using Replica.DTO.Hookahs.HookahComponent;
+﻿using Replica.DTO.Base;
+using Replica.DTO.Hookahs.HookahComponent;
 
 namespace Replica.DTO.Hookahs.ComponentCategory
 {

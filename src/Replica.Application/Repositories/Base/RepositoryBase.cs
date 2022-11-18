@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using Replica.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Replica.Application.Repository.Base
+namespace Replica.Application.Repositories.Base
 {
     public abstract class RepositoryBase
     {

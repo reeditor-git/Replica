@@ -1,23 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
-using Replica.Application.Repository.Base;
+using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
 using Replica.DTO.Orders.GameZone;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Replica.Application.Repository.Orders
+namespace Replica.Application.Repositories.Orders
 {
     public class GameZoneRepository : RepositoryBase
     {
         public GameZoneRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<GameZoneDTO> Create(GameZoneDTO entity)
+        public async Task<GameZoneDTO> Create(CreateGameZoneDTO entity)
         {
             var gameZone = new GameZone()
             {
@@ -35,6 +30,9 @@ namespace Replica.Application.Repository.Orders
         public async Task<GameZoneDTO> Delete(Guid id)
         {
             var gameZone = await _dbContext.GameZones.FindAsync(id);
+
+            if (gameZone != null)
+                _dbContext.GameZones.Remove(gameZone);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<GameZoneDTO>(gameZone);
@@ -54,11 +52,27 @@ namespace Replica.Application.Repository.Orders
             return _mapper.Map<IEnumerable<GameZoneDTO>>(gameZones);
         }
 
+        public async Task<IEnumerable<GameZoneDTO>> GetAllAvailable()
+        {
+            IEnumerable<GameZone> gameZones = await _dbContext.GameZones
+                .Where(x => x.Available == true).ToListAsync();
+
+            return _mapper.Map<IEnumerable<GameZoneDTO>>(gameZones);
+        }
+
+        public async Task<IEnumerable<GameZoneDTO>> GetAllUnavailable()
+        {
+            IEnumerable<GameZone> gameZones = await _dbContext.GameZones
+                .Where(x => x.Available == false).ToListAsync();
+
+            return _mapper.Map<IEnumerable<GameZoneDTO>>(gameZones);
+        }
+
         public async Task<GameZoneDTO> Update(GameZoneDTO entity)
         {
             var gameZone = await _dbContext.GameZones.FindAsync(entity.Id);
 
-            if(gameZone != null)
+            if (gameZone != null)
             {
                 gameZone.Name = entity.Name;
                 gameZone.Description = entity.Description;

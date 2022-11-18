@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
-using Replica.Application.Repository.Base;
+using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Hookahs;
 using Replica.DTO.Hookahs.Hookah;
 
-namespace Replica.Application.Repository.Hookahs
+namespace Replica.Application.Repositories.Hookahs
 {
     public class HookahRepository : RepositoryBase
     {
         public HookahRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<HookahDTO> Create(HookahDTO entity)
+        public async Task<HookahDTO> Create(CreateHookahDTO entity)
         {
             var hookah = new Hookah()
             {
@@ -26,15 +26,18 @@ namespace Replica.Application.Repository.Hookahs
 
             await _dbContext.Hookahs.AddAsync(hookah);
             await _dbContext.SaveChangesAsync();
-
             return _mapper.Map<HookahDTO>(hookah);
         }
 
         public async Task<HookahDTO> Delete(Guid id)
         {
             var hookah = await _dbContext.Hookahs.FindAsync(id);
+
             if (hookah != null)
+            {
+                hookah.Components.Clear();
                 _dbContext.Hookahs.Remove(hookah);
+            }
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<HookahDTO>(hookah);

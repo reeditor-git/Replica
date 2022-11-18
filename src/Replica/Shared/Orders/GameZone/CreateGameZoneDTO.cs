@@ -1,8 +1,6 @@
-﻿using Replica.DTO.Base;
-
-namespace Replica.DTO.Orders.GameZone
+﻿namespace Replica.DTO.Orders.GameZone
 {
-    public class GameZoneDTO : DTOBase
+    public class CreateGameZoneDTO
     {
         public string Name { get; set; }
 
