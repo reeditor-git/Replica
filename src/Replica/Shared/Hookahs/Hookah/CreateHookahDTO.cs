@@ -1,10 +1,12 @@
-﻿using Replica.DTO.Hookahs.HookahComponent;
+﻿using Replica.Shared.Hookahs.HookahComponent;
 
-namespace Replica.DTO.Hookahs.Hookah
+namespace Replica.Shared.Hookahs.Hookah
 {
     public class CreateHookahDTO
     {
         public bool AdditionalHose { get; set; }
+
+        public string Image { get; set; }
 
         public ICollection<HookahComponentDTO> Components { get; set; }
     }

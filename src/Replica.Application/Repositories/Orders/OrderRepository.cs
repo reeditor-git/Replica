@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
-using Replica.DTO.Orders.Order;
+using Replica.Domain.Entities.Users;
+using Replica.Shared.Orders.Order;
 
 namespace Replica.Application.Repositories.Orders
 {
@@ -12,24 +14,33 @@ namespace Replica.Application.Repositories.Orders
         public OrderRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<OrderDTO> Create(OrderDTO entity)
+        public async Task<OrderDTO> Create(CreateOrderDTO entity)
         {
             var order = new Order()
             {
-                User = await _dbContext.Users.FindAsync(entity.UserId),
-                Table = await _dbContext.Tables.FindAsync(entity.Table.Id),
-                GameZone = await _dbContext.GameZones.FindAsync(entity.GameZone.Id),
+                User = await _dbContext.Users.FindAsync(entity.UserId)
+                            ?? throw new NotFoundException(nameof(User), entity.UserId),
+                Table = entity.TableId != null ? await _dbContext.Tables.FindAsync(entity.TableId)
+                            ?? throw new NotFoundException(nameof(User), entity.TableId) : null,
+                GameZone = entity.GameZoneId != null ? await _dbContext.GameZones.FindAsync(entity.GameZoneId)
+                            ?? throw new NotFoundException(nameof(User), entity.GameZoneId) : null,
                 Comment = entity.Comment
             };
 
-            foreach (var product in entity.Products)
+            if (entity.Products != null)
             {
-                order.Products.Add(await _dbContext.Products.FindAsync(product.Id));
+                foreach (var product in entity.Products)
+                {
+                    order.Products.Add(await _dbContext.Products.FindAsync(product.Id)
+                        ?? throw new NotFoundException(nameof(Product), product.Id));
+                }
             }
-
-            foreach (var hookah in entity.Hookahs)
+            if (entity.Hookahs != null)
             {
-                order.Hookahs.Add(await _dbContext.Hookahs.FindAsync(hookah.Id));
+                foreach (var hookah in entity.Hookahs)
+                {
+                    order.Hookahs.Add(await _dbContext.Hookahs.FindAsync(hookah.Id));
+                }
             }
 
             await _dbContext.Orders.AddAsync(order);
@@ -41,7 +52,7 @@ namespace Replica.Application.Repositories.Orders
         {
             var order = await _dbContext.Orders.FindAsync(id);
 
-            if(order != null)
+            if (order != null)
                 _dbContext.Orders.Remove(order);
 
             await _dbContext.SaveChangesAsync();
@@ -64,12 +75,15 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<OrderDTO> Update(OrderDTO entity)
         {
-            var order = await _dbContext.Orders.FindAsync(entity.Id);
+            var order = await _dbContext.Orders.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(User), entity.Id);
 
-            if(order != null)
+            if (order != null)
             {
-                order.User = await _dbContext.Users.FindAsync(entity.UserId);
-                order.Table = await _dbContext.Tables.FindAsync(entity.Table.Id);
+                order.User = await _dbContext.Users.FindAsync(entity.UserId)
+                            ?? throw new NotFoundException(nameof(User), entity.UserId);
+                order.Table = entity.Table.Id != null ? await _dbContext.Tables.FindAsync(entity.Table.Id)
+                            ?? throw new NotFoundException(nameof(User), entity.Table.Id) : null;
                 order.GameZone = await _dbContext.GameZones.FindAsync(entity.GameZone.Id);
                 order.Comment = entity.Comment;
             }

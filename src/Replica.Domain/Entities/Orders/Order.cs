@@ -16,6 +16,8 @@ namespace Replica.Domain.Entities.Orders
 
         public ICollection<Hookah>? Hookahs { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
+
+        public bool Paid { get; set; }
     }
 }

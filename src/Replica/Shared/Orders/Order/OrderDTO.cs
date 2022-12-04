@@ -1,10 +1,10 @@
-﻿using Replica.DTO.Base;
-using Replica.DTO.Hookahs.Hookah;
-using Replica.DTO.Orders.GameZone;
-using Replica.DTO.Orders.Product;
-using Replica.DTO.Orders.Table;
+﻿using Replica.Shared.Base;
+using Replica.Shared.Hookahs.Hookah;
+using Replica.Shared.Orders.GameZone;
+using Replica.Shared.Orders.Product;
+using Replica.Shared.Orders.Table;
 
-namespace Replica.DTO.Orders.Order
+namespace Replica.Shared.Orders.Order
 {
     public class OrderDTO : DTOBase
     {
@@ -16,8 +16,10 @@ namespace Replica.DTO.Orders.Order
 
         public ICollection<ProductDTO>? Products { get; set; }
 
-        public ICollection<HookahDTO> Hookahs { get; set; }
+        public ICollection<HookahDTO>? Hookahs { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
+
+        public bool Paid { get; set; }
     }
 }

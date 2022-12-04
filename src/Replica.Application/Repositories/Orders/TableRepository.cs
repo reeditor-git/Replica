@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
-using Replica.DTO.Orders.Table;
+using Replica.Shared.Orders.Table;
 
 namespace Replica.Application.Repositories.Orders
 {

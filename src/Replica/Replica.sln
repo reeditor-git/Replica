@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Replica.Persistence", "..\Replica.Persistence\Replica.Persistence.csproj", "{A80442A1-E9B8-42C3-9937-0A309DE38490}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Replica.DTO", "Shared\Replica.DTO.csproj", "{B0DF7CBA-6DFC-4F52-B815-3F4DDD75263D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Replica.Shared", "Shared\Replica.Shared.csproj", "{B0DF7CBA-6DFC-4F52-B815-3F4DDD75263D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
-﻿using Replica.DTO.Base;
-using Replica.DTO.Orders.Subcategory;
+﻿using Replica.Shared.Base;
+using Replica.Shared.Orders.Subcategory;
 
-namespace Replica.DTO.Orders.Product
+namespace Replica.Shared.Orders.Product
 {
     public class ProductDTO : DTOBase
     {
@@ -12,5 +12,7 @@ namespace Replica.DTO.Orders.Product
         public decimal Price { get; set; }
 
         public SubcategoryDTO? Subcategory { get; set; }
+
+        public string Image { get; set; }
     }
 }

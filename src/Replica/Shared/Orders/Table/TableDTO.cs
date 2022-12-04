@@ -1,6 +1,6 @@
-﻿using Replica.DTO.Base;
+﻿using Replica.Shared.Base;
 
-namespace Replica.DTO.Orders.Table
+namespace Replica.Shared.Orders.Table
 {
     public class TableDTO : DTOBase
     {
@@ -11,5 +11,7 @@ namespace Replica.DTO.Orders.Table
         public bool Available { get; set; }
 
         public int SeatingCapacity { get; set; }
+
+        public string Image { get; set; }
     }
 }

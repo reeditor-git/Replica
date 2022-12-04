@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
-using Replica.DTO.Orders.Category;
+using Replica.Shared.Orders.Category;
 
 namespace Replica.Application.Repositories.Orders
 {
@@ -16,7 +17,8 @@ namespace Replica.Application.Repositories.Orders
         {
             var category = new Category()
             {
-                Name = entity.Name
+                Name = entity.Name,
+                Icon = entity.Icon
             };
 
             await _dbContext.Categories.AddAsync(category);
@@ -26,10 +28,10 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<ShortCategoryDTO> Delete(Guid id)
         {
-            var category = await _dbContext.Categories.FindAsync(id);
+            var category = await _dbContext.Categories.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Category), id);
 
-            if(category != null)
-                _dbContext.Categories.Remove(category);
+            _dbContext.Categories.Remove(category);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ShortCategoryDTO>(category);
@@ -37,7 +39,8 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<CategoryDTO> Get(Guid id)
         {
-            var category = await _dbContext.Categories.FindAsync(id);
+            var category = await _dbContext.Categories.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Category), id);
 
             return _mapper.Map<CategoryDTO>(category);
         }
@@ -58,9 +61,11 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<ShortCategoryDTO> Update(ShortCategoryDTO entity)
         {
-            var category = await _dbContext.Categories.FindAsync(entity.Id);
-            if (category != null)
-                category.Name = entity.Name;
+            var category = await _dbContext.Categories.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(Category), entity.Id);
+
+            category.Name = entity.Name;
+            category.Icon = entity.Icon;
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ShortCategoryDTO>(category);

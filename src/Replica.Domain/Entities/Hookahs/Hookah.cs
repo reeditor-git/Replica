@@ -6,6 +6,8 @@ namespace Replica.Domain.Entities.Hookahs
     {
         public bool AdditionalHose { get; set; }
 
+        public string Image { get; set; }
+
         public ICollection<HookahComponent> Components { get; set; }
     }
 }

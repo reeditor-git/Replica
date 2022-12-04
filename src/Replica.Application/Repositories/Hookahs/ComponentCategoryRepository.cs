@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Hookahs;
-using Replica.DTO.Hookahs.ComponentCategory;
+using Replica.Shared.Hookahs.ComponentCategory;
 
 namespace Replica.Application.Repositories.Hookahs
 {
@@ -16,7 +17,8 @@ namespace Replica.Application.Repositories.Hookahs
         {
             var componentCategory = new ComponentCategory()
             {
-                Name = entity.Name
+                Name = entity.Name,
+                Icon = entity.Icon
             };
 
             await _dbContext.ComponentCategories.AddAsync(componentCategory);
@@ -26,10 +28,10 @@ namespace Replica.Application.Repositories.Hookahs
 
         public async Task<ShortComponentCategoryDTO> Delete(Guid id)
         {
-            var componentCategory = await _dbContext.ComponentCategories.FindAsync(id);
+            var componentCategory = await _dbContext.ComponentCategories.FindAsync(id)
+                ?? throw new NotFoundException(nameof(ComponentCategory), id);
 
-            if (componentCategory != null)
-                _dbContext.ComponentCategories.Remove(componentCategory);
+            _dbContext.ComponentCategories.Remove(componentCategory);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ShortComponentCategoryDTO>(componentCategory);
@@ -37,14 +39,15 @@ namespace Replica.Application.Repositories.Hookahs
 
         public async Task<ComponentCategoryDTO> Get(Guid id)
         {
-            var componentCategory = await _dbContext.ComponentCategories.FindAsync(id);
+            var componentCategory = await _dbContext.ComponentCategories.FindAsync(id)
+                ?? throw new NotFoundException(nameof(ComponentCategory), id);
 
             return _mapper.Map<ComponentCategoryDTO>(componentCategory);
         }
 
         public async Task<IEnumerable<ComponentCategoryDTO>> GetAll()
         {
-            IEnumerable<ComponentCategory> 
+            IEnumerable<ComponentCategory>
                 componentCategorys = await _dbContext.ComponentCategories.ToListAsync();
 
             return _mapper.Map<IEnumerable<ComponentCategoryDTO>>(componentCategorys);
@@ -59,10 +62,11 @@ namespace Replica.Application.Repositories.Hookahs
 
         public async Task<ShortComponentCategoryDTO> Update(ShortComponentCategoryDTO entity)
         {
-            var componentCategory = await _dbContext.ComponentCategories.FindAsync(entity.Id);
-            
-            if(componentCategory != null)
-                componentCategory.Name = entity.Name;
+            var componentCategory = await _dbContext.ComponentCategories.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(ComponentCategory), entity.Id);
+
+            componentCategory.Name = entity.Name;
+            componentCategory.Icon = entity.Icon;
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ShortComponentCategoryDTO>(componentCategory);

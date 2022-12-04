@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories.Orders;
-using Replica.DTO.Orders.Category;
+using Replica.Shared.Orders.Category;
 
 namespace Replica.Server.Controllers.Orders
 {
@@ -10,42 +10,31 @@ namespace Replica.Server.Controllers.Orders
     {
         protected readonly CategoryRepository _repository;
 
-        public CategoryController(CategoryRepository repository) => _repository = repository;
+        public CategoryController(CategoryRepository repository) =>
+            _repository = repository;
 
         [HttpPost("create")]
-        public async Task<ShortCategoryDTO> Create(CreateCategoryDTO entity)
-        {
-            return await _repository.Create(entity);
-        }
+        public async Task<ShortCategoryDTO> Create(CreateCategoryDTO entity) => 
+            await _repository.Create(entity);
 
         [HttpDelete("delete/{id}")]
-        public async Task<ShortCategoryDTO> Delete(Guid id)
-        {
-            return await _repository.Delete(id);
-        }
+        public async Task<ShortCategoryDTO> Delete(Guid id) => 
+            await _repository.Delete(id);
 
         [HttpGet("get/{id}")]
-        public async Task<CategoryDTO> Get(Guid id)
-        {
-            return await _repository.Get(id);
-        }
+        public async Task<CategoryDTO> Get(Guid id) => 
+            await _repository.Get(id);
 
         [HttpGet("get-all")]
-        public async Task<IEnumerable<CategoryDTO>> GetAll()
-        {
-            return await _repository.GetAll();
-        }
+        public async Task<IEnumerable<CategoryDTO>> GetAll() => 
+            await _repository.GetAll();
 
         [HttpGet("get-all-short")]
-        public async Task<IEnumerable<ShortCategoryDTO>> GetAllShort()
-        {
-            return await _repository.GetAllShort();
-        }
+        public async Task<IEnumerable<ShortCategoryDTO>> GetAllShort() => 
+            await _repository.GetAllShort();
 
         [HttpPut("update")]
-        public async Task<ShortCategoryDTO> Update(ShortCategoryDTO entity)
-        {
-            return await _repository.Update(entity);
-        }
+        public async Task<ShortCategoryDTO> Update(ShortCategoryDTO entity) => 
+            await _repository.Update(entity);
     }
 }

@@ -1,10 +1,8 @@
-﻿using Replica.Shared.Base;
-
-namespace Replica.Shared.Orders.GameZone
+﻿namespace Replica.Shared.Orders.Table
 {
-    public class GameZoneDTO : DTOBase
+    public class CreateTableDTO
     {
-        public string Name { get; set; }
+        public int TableNumber { get; set; }
 
         public string Description { get; set; }
 

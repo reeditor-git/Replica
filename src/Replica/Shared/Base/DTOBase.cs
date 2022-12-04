@@ -1,4 +1,4 @@
-﻿namespace Replica.DTO.Base
+﻿namespace Replica.Shared.Base
 {
     public class DTOBase
     {

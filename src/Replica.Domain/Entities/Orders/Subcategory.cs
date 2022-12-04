@@ -6,6 +6,8 @@ namespace Replica.Domain.Entities.Orders
     {
         public string Name { get; set; }
 
+        public string Icon { get; set; }
+
         public Category Category { get; set; }
 
         public ICollection<Product>? Products { get; set; }

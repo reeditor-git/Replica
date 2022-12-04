@@ -1,9 +1,11 @@
-﻿using Replica.DTO.Base;
+﻿using Replica.Shared.Base;
 
-namespace Replica.DTO.Hookahs.ComponentCategory
+namespace Replica.Shared.Hookahs.ComponentCategory
 {
     public class ShortComponentCategoryDTO : DTOBase
     {
         public string Name { get; set; }
+
+        public string Icon { get; set; }
     }
 }

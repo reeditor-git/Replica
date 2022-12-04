@@ -6,6 +6,8 @@ namespace Replica.Domain.Entities.Hookahs
     {
         public string Name { get; set; }
 
+        public string Icon { get; set; }
+
         public ICollection<HookahComponent>? Components { get; set; }
     }
 }

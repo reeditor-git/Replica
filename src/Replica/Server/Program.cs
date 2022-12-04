@@ -4,6 +4,7 @@ using Replica.Application.Profiles;
 using Replica.Application.Repositories.Hookahs;
 using Replica.Application.Repositories.Orders;
 using Replica.Persistence;
+using Replica.Server.Middleware;
 
 namespace Replica
 {
@@ -57,6 +58,8 @@ namespace Replica
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Replica API v1");
             });
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();
 

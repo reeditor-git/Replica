@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
-using Replica.DTO.Orders.GameZone;
+using Replica.Shared.Orders.GameZone;
 
 namespace Replica.Application.Repositories.Orders
 {
@@ -18,8 +19,9 @@ namespace Replica.Application.Repositories.Orders
             {
                 Name = entity.Name,
                 Description = entity.Description,
-                Available = entity.Available,
-                SeatingCapacity = entity.SeatingCapacity
+                Available = true,
+                SeatingCapacity = entity.SeatingCapacity,
+                Image = entity.Image
             };
 
             await _dbContext.GameZones.AddAsync(gameZone);
@@ -29,7 +31,8 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<GameZoneDTO> Delete(Guid id)
         {
-            var gameZone = await _dbContext.GameZones.FindAsync(id);
+            var gameZone = await _dbContext.GameZones.FindAsync(id)
+                ?? throw new NotFoundException(nameof(GameZone), id);
 
             if (gameZone != null)
                 _dbContext.GameZones.Remove(gameZone);
@@ -40,7 +43,8 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<GameZoneDTO> Get(Guid id)
         {
-            var gameZone = await _dbContext.GameZones.FindAsync(id);
+            var gameZone = await _dbContext.GameZones.FindAsync(id)
+                ?? throw new NotFoundException(nameof(GameZone), id);
 
             return _mapper.Map<GameZoneDTO>(gameZone);
         }
@@ -70,15 +74,14 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<GameZoneDTO> Update(GameZoneDTO entity)
         {
-            var gameZone = await _dbContext.GameZones.FindAsync(entity.Id);
+            var gameZone = await _dbContext.GameZones.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(GameZone), entity.Id);
 
-            if (gameZone != null)
-            {
-                gameZone.Name = entity.Name;
-                gameZone.Description = entity.Description;
-                gameZone.Available = entity.Available;
-                gameZone.SeatingCapacity = entity.SeatingCapacity;
-            }
+            gameZone.Name = entity.Name;
+            gameZone.Description = entity.Description;
+            gameZone.Available = entity.Available;
+            gameZone.SeatingCapacity = entity.SeatingCapacity;
+            gameZone.Image = entity.Image;
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<GameZoneDTO>(gameZone);

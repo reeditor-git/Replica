@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Replica.Domain\Replica.Domain.csproj" />
-    <ProjectReference Include="..\Replica\Shared\Replica.DTO.csproj" />
+    <ProjectReference Include="..\Replica\Shared\Replica.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
