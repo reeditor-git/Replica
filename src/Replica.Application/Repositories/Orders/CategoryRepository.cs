@@ -30,7 +30,16 @@ namespace Replica.Application.Repositories.Orders
         {
             var category = await _dbContext.Categories.FindAsync(id)
                 ?? throw new NotFoundException(nameof(Category), id);
+            var subcategory = await _dbContext.Subcategories.Where(x => x.Category.Id == category.Id).ToListAsync();
+            var product = new List<Product>();
 
+            foreach (var sub in subcategory)
+            {
+                product = await _dbContext.Products.Where(x => x.Subcategory.Id == sub.Id).ToListAsync();
+            }
+
+            _dbContext.Products.RemoveRange(product);
+            _dbContext.Subcategories.RemoveRange(subcategory);
             _dbContext.Categories.Remove(category);
 
             await _dbContext.SaveChangesAsync();

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
@@ -12,7 +13,7 @@ namespace Replica.Application.Repositories.Orders
         public TableRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<TableDTO> Create(TableDTO entity)
+        public async Task<TableDTO> Create(CreateTableDTO entity)
         {
             var table = new Table()
             {
@@ -29,10 +30,10 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<TableDTO> Delete(Guid id)
         {
-            var table = await _dbContext.Tables.FindAsync(id);
+            var table = await _dbContext.Tables.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Table), id);
 
-            if(table != null)
-                _dbContext.Tables.Remove(table);
+            _dbContext.Tables.Remove(table);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<TableDTO>(table);
@@ -40,7 +41,8 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<TableDTO> Get(Guid id)
         {
-            var table = await _dbContext.Tables.FindAsync(id);
+            var table = await _dbContext.Tables.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Table), id);
 
             return _mapper.Map<TableDTO>(table);
         }
@@ -52,17 +54,31 @@ namespace Replica.Application.Repositories.Orders
             return _mapper.Map<IEnumerable<TableDTO>>(tables);
         }
 
+        public async Task<IEnumerable<TableDTO>> GetAllAvailable()
+        {
+            IEnumerable<Table> tables = await _dbContext.Tables
+                .Where(x => x.Available == true).ToListAsync();
+
+            return _mapper.Map<IEnumerable<TableDTO>>(tables);
+        }
+
+        public async Task<IEnumerable<TableDTO>> GetAllUnavailable()
+        {
+            IEnumerable<Table> tables = await _dbContext.Tables
+                .Where(x => x.Available == false).ToListAsync();
+
+            return _mapper.Map<IEnumerable<TableDTO>>(tables);
+        }
+
         public async Task<TableDTO> Update(TableDTO entity)
         {
-            var table = await _dbContext.Tables.FindAsync(entity.Id);
+            var table = await _dbContext.Tables.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(Subcategory), entity.Id);
 
-            if(table != null)
-            {
-                table.TableNumber = entity.TableNumber;
-                table.Description = entity.Description;
-                table.Available = entity.Available;
-                table.SeatingCapacity = entity.SeatingCapacity;
-            }
+            table.TableNumber = entity.TableNumber;
+            table.Description = entity.Description;
+            table.Available = entity.Available;
+            table.SeatingCapacity = entity.SeatingCapacity;
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<TableDTO>(table);

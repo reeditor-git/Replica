@@ -6,34 +6,34 @@ namespace Replica.Server.Controllers.Orders
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         protected readonly CategoryRepository _repository;
 
-        public CategoryController(CategoryRepository repository) =>
+        public CategoriesController(CategoryRepository repository) =>
             _repository = repository;
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<ShortCategoryDTO> Create(CreateCategoryDTO entity) => 
             await _repository.Create(entity);
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ShortCategoryDTO> Delete(Guid id) => 
             await _repository.Delete(id);
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<CategoryDTO> Get(Guid id) => 
             await _repository.Get(id);
 
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IEnumerable<CategoryDTO>> GetAll() => 
             await _repository.GetAll();
 
-        [HttpGet("get-all-short")]
+        [HttpGet("short")]
         public async Task<IEnumerable<ShortCategoryDTO>> GetAllShort() => 
             await _repository.GetAllShort();
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<ShortCategoryDTO> Update(ShortCategoryDTO entity) => 
             await _repository.Update(entity);
     }

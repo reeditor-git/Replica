@@ -6,36 +6,36 @@ namespace Replica.Server.Controllers.Orders
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GameZoneController : ControllerBase
+    public class GameZonesController : ControllerBase
     {
         protected readonly GameZoneRepository _repository;
-        public GameZoneController(GameZoneRepository repository) => 
+        public GameZonesController(GameZoneRepository repository) => 
             _repository = repository;
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<GameZoneDTO> Create(CreateGameZoneDTO entity) => 
             await _repository.Create(entity);
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<GameZoneDTO> Delete(Guid id) => 
             await _repository.Delete(id);
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<GameZoneDTO> Get(Guid id) => 
             await _repository.Get(id);
 
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IEnumerable<GameZoneDTO>> GetAll() => 
             await _repository.GetAll();
 
-        [HttpGet("get-all-available")]
+        [HttpGet("available")]
         public async Task<IEnumerable<GameZoneDTO>> GetAllAvailable() => 
             await _repository.GetAllAvailable();
 
-        [HttpGet("get-all-unavailable")]
+        [HttpGet("unavailable")]
         public async Task<IEnumerable<GameZoneDTO>> GetAllUnavailable() => 
             await _repository.GetAllUnavailable();
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<GameZoneDTO> Update(GameZoneDTO entity) => 
             await _repository.Update(entity);
     }

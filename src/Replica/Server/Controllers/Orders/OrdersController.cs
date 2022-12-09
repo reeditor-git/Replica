@@ -6,29 +6,33 @@ namespace Replica.Server.Controllers.Orders
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         protected readonly OrderRepository _repository;
-        public OrderController(OrderRepository repository) => 
+        public OrdersController(OrderRepository repository) => 
             _repository = repository;
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<OrderDTO> Create(CreateOrderDTO entity) => 
             await _repository.Create(entity);
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<OrderDTO> Delete(Guid id) => 
             await _repository.Delete(id);
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<OrderDTO> Get(Guid id) => 
             await _repository.Get(id);
 
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IEnumerable<OrderDTO>> GetAll() => 
             await _repository.GetAll();
 
-        [HttpPut("update")]
+        [HttpGet("user/{id}")]
+        public async Task<IEnumerable<OrderDTO>> GetAllByUser(Guid id) =>
+            await _repository.GetAllByUser(id);
+
+        [HttpPut]
         public async Task<OrderDTO> Update(OrderDTO entity) => 
             await _repository.Update(entity);
     }

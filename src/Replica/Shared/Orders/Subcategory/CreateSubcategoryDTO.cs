@@ -8,7 +8,7 @@ namespace Replica.Shared.Orders.Subcategory
 
         public string Icon { get; set; }
 
-        public Guid CategoryID { get; set; }
+        public Guid CategoryId { get; set; }
 
         public ICollection<ProductDTO>? Products { get; set; }
     }

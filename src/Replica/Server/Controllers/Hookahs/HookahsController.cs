@@ -6,29 +6,29 @@ namespace Replica.Server.Controllers.Hookahs
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HookahController : ControllerBase
+    public class HookahsController : ControllerBase
     {
         private readonly HookahRepository _repository;
-        public HookahController(HookahRepository repository) =>
+        public HookahsController(HookahRepository repository) =>
             _repository = repository;
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<HookahDTO> Create(CreateHookahDTO entity) =>
             await _repository.Create(entity);
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<HookahDTO> Delete(Guid id) => 
             await _repository.Delete(id);
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<HookahDTO> Get(Guid id) => 
             await _repository.Get(id);
 
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IEnumerable<HookahDTO>> GetAll() => 
             await _repository.GetAll();
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<HookahDTO> Update(HookahDTO entity) => 
             await _repository.Update(entity);
     }

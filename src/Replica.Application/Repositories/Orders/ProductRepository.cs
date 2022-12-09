@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
+using Replica.Domain.Entities.Users;
 using Replica.Shared.Orders.Product;
 
 namespace Replica.Application.Repositories.Orders
@@ -12,14 +14,15 @@ namespace Replica.Application.Repositories.Orders
         public ProductRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<ProductDTO> Create(ProductDTO entity)
+        public async Task<ProductDTO> Create(CreateProductDTO entity)
         {
             var product = new Product()
             {
                 Name = entity.Name,
                 Description = entity.Description,
                 Price = entity.Price,
-                Subcategory = await _dbContext.Subcategories.FindAsync(entity.Subcategory.Id)
+                Subcategory = await _dbContext.Subcategories.FindAsync(entity.SubcategoryId)
+                    ?? throw new NotFoundException(nameof(Subcategory), entity.SubcategoryId)
             };
 
             await _dbContext.Products.AddAsync(product);
@@ -29,10 +32,10 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<ProductDTO> Delete(Guid id)
         {
-            var product = await _dbContext.Products.FindAsync(id);
+            var product = await _dbContext.Products.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Product), id);
 
-            if (product != null)
-                _dbContext.Products.Remove(product);
+            _dbContext.Products.Remove(product);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ProductDTO>(product);
@@ -40,7 +43,8 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<ProductDTO> Get(Guid id)
         {
-            var product = await _dbContext.Products.FindAsync(id);
+            var product = await _dbContext.Products.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Product), id);
 
             return _mapper.Map<ProductDTO>(product);
         }
@@ -54,15 +58,14 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<ProductDTO> Update(ProductDTO entity)
         {
-            var product = await _dbContext.Products.FindAsync(entity.Id);
+            var product = await _dbContext.Products.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(Product), entity.Id);
 
-            if (product != null)
-            {
-                product.Name = entity.Name;
-                product.Description = entity.Description;
-                product.Price = entity.Price;
-                product.Subcategory = await _dbContext.Subcategories.FindAsync(entity.Subcategory.Id);
-            }
+            product.Name = entity.Name;
+            product.Description = entity.Description;
+            product.Price = entity.Price;
+            product.Subcategory = await _dbContext.Subcategories.FindAsync(entity.Subcategory.Id)
+                ?? throw new NotFoundException(nameof(Subcategory), entity.Subcategory.Id);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ProductDTO>(product);

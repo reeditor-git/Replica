@@ -8,7 +8,7 @@
 
         public decimal Price { get; set; }
 
-        public Guid SubcategoryID { get; set; }
+        public Guid SubcategoryId { get; set; }
 
         public string Image { get; set; }
     }

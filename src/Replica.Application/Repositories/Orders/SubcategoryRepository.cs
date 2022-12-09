@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Application.Repositories.Base;
 using Replica.Domain.Entities.Orders;
@@ -12,12 +13,13 @@ namespace Replica.Application.Repositories.Orders
         public SubcategoryRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<SubcategoryDTO> Create(SubcategoryDTO entity)
+        public async Task<SubcategoryDTO> Create(CreateSubcategoryDTO entity)
         {
             var subcategory = new Subcategory()
             {
                 Name = entity.Name,
-                Category = await _dbContext.Categories.FindAsync(entity.Category.Id)
+                Category = await _dbContext.Categories.FindAsync(entity.CategoryId)
+                ?? throw new NotFoundException(nameof(Category), entity.CategoryId)
             };
 
             await _dbContext.Subcategories.AddAsync(subcategory);
@@ -27,10 +29,14 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<SubcategoryDTO> Delete(Guid id)
         {
-            var subcategory = await _dbContext.Subcategories.FindAsync(id);
+            var subcategory = await _dbContext.Subcategories.FindAsync(id)
+                ?? throw new NotFoundException(nameof(Subcategory), id);
 
-            if (subcategory != null)
-                _dbContext.Subcategories.Remove(subcategory);
+            _dbContext.Products.RemoveRange(
+                await _dbContext.Products
+                .Where(x => x.Subcategory.Id == subcategory.Id)
+                .ToListAsync());
+            _dbContext.Subcategories.Remove(subcategory);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<SubcategoryDTO>(subcategory);
@@ -52,7 +58,8 @@ namespace Replica.Application.Repositories.Orders
 
         public async Task<SubcategoryDTO> Update(SubcategoryDTO entity)
         {
-            var subcategory = await _dbContext.Subcategories.FindAsync(entity.Id);
+            var subcategory = await _dbContext.Subcategories.FindAsync(entity.Id)
+                ?? throw new NotFoundException(nameof(Subcategory), entity.Id);
 
             if (subcategory != null)
                 subcategory.Name = entity.Name;

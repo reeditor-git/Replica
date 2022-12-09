@@ -31,6 +31,10 @@ namespace Replica.Application.Repositories.Hookahs
             var componentCategory = await _dbContext.ComponentCategories.FindAsync(id)
                 ?? throw new NotFoundException(nameof(ComponentCategory), id);
 
+            _dbContext.HookahComponents.RemoveRange(
+                await _dbContext.HookahComponents
+                .Where(x => x.Category.Id == componentCategory.Id)
+                .ToListAsync());
             _dbContext.ComponentCategories.Remove(componentCategory);
 
             await _dbContext.SaveChangesAsync();
@@ -52,6 +56,7 @@ namespace Replica.Application.Repositories.Hookahs
 
             return _mapper.Map<IEnumerable<ComponentCategoryDTO>>(componentCategorys);
         }
+
         public async Task<IEnumerable<ShortComponentCategoryDTO>> GetAllShort()
         {
             IEnumerable<ComponentCategory>
