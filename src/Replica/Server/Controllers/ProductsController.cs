@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories;
 using Replica.Shared.Orders.Product;
 
@@ -12,11 +13,11 @@ namespace Replica.Server.Controllers
         public ProductsController(ProductRepository repository) =>
             _repository = repository;
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<ProductDto> Create(CreateProductDto entity) =>
             await _repository.Create(entity);
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public async Task<ProductDto> Delete(Guid id) =>
             await _repository.Delete(id);
 
@@ -28,7 +29,7 @@ namespace Replica.Server.Controllers
         public async Task<IEnumerable<ProductDto>> GetAll() =>
             await _repository.GetAll();
 
-        [HttpPut]
+        [HttpPut, Authorize]
         public async Task<ProductDto> Update(ProductDto entity) =>
             await _repository.Update(entity);
     }

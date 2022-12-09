@@ -34,6 +34,14 @@ namespace Replica.Server.Middleware
                 case NotFoundException:
                     code = HttpStatusCode.NotFound;
                     break;
+
+                case EmailNotFoundException:
+                    code = HttpStatusCode.NotFound;
+                    break;
+                
+                case PasswordException:
+                    code = HttpStatusCode.BadRequest;
+                    break;
             }
 
             context.Response.ContentType = "application/json";

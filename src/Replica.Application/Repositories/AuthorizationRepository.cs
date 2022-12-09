@@ -15,26 +15,26 @@ namespace Replica.Application.Repositories
         public AuthorizationRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<LoginDto> Login(AuthorizationDto auth, string apiKey)
+        public async Task<LoginDto> Login(AuthorizationDto auth, string secret)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email.ToUpper() == auth.Email.ToUpper())
-                ?? throw new NotFoundException(nameof(User), auth.Email);
+            var user = await _dbContext.Users.Include(x => x.Role).FirstOrDefaultAsync(x => x.Email.ToUpper() == auth.Email.ToUpper())
+                ?? throw new EmailNotFoundException(auth.Email);
 
-            //if (user.Password != auth.Password)
-            //{
-            //    throw new NotFoundException(nameof(User), auth.Password);
-            //}
+            if (user.Password != auth.Password)
+            {
+                throw new PasswordException(auth.Email);
+            }
 
-            var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == "User")
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Name == user.Role.Name)
                 ?? throw new NotFoundException(nameof(Role), user.Role.Id); ;
 
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, role.Name),
-                new Claim(ClaimTypes.Name, user.Nickname)
+                new Claim("Id", user.Id.ToString()),
+                new Claim("Role", user.Role.Name),
+                new Claim("Nickname", user.Nickname)
             };
 
-            var token = AuthHelpers.GenerateToken(apiKey, claims);
+            var token = AuthHelpers.GenerateToken(secret, claims);
             var refreshToken = AuthHelpers.GenerateRefreshToken();
 
             await _dbContext.RefreshTokens.AddAsync(new RefreshToken

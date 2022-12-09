@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Replica.Application.Interfaces;
 using Replica.Application.Profiles;
 using Replica.Application.Repositories;
 using Replica.Persistence;
-using Replica.Server.Configuration;
 using Replica.Server.Middleware;
+using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
 namespace Replica
@@ -26,8 +25,6 @@ namespace Replica
             options.UseSqlServer(connectionString,
             x => x.MigrationsAssembly("Replica.Persistence")));
 
-            builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
-
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -36,7 +33,7 @@ namespace Replica
             })
                 .AddJwtBearer(jwt =>
                 {
-                    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value);
+                    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("Secret"));
 
                     jwt.SaveToken = true;
                     jwt.TokenValidationParameters = new TokenValidationParameters()
@@ -71,35 +68,20 @@ namespace Replica
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            builder.Services.AddSwaggerGen(option =>
+            builder.Services.AddSwaggerGen(options =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
-                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
                     In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
                     Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
+                    Type = SecuritySchemeType.ApiKey
                 });
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
-                            }
-                        },
-                        new string[]{}
-                    }
-                });
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
-            var app = builder.Build();
+                var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -122,14 +104,14 @@ namespace Replica
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapRazorPages();
             app.MapControllers();

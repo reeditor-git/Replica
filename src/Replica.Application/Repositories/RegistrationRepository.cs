@@ -13,7 +13,7 @@ namespace Replica.Application.Repositories
         public RegistrationRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }
 
-        public async Task<LoginDto> Registration(RegistrationDto registr, string apiKey)
+        public async Task<LoginDto> Registration(RegistrationDto registr, string secret)
         {
             var newUser = new User
             {
@@ -33,7 +33,7 @@ namespace Replica.Application.Repositories
                 new Claim(ClaimTypes.Name, newUser.Nickname)
             };
 
-            var token = AuthHelpers.GenerateToken(apiKey, claims);
+            var token = AuthHelpers.GenerateToken(secret, claims);
             var refreshToken = AuthHelpers.GenerateRefreshToken();
 
             await _dbContext.Users.AddAsync(newUser);

@@ -13,11 +13,11 @@ namespace Replica.Application.Helpers
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(apiKey));
 
             var jwt = new JwtSecurityToken(
-                issuer: "Reolica",
-                audience: "BarUser",
+                issuer: "Replica",
+                audience: "Replica",
                 claims: claims,
                 notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddMinutes(5),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );
 
