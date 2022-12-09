@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
-using Replica.Shared.Hookahs.ComponentCategory;
+using Replica.Shared.ComponentCategory;
 
 namespace Replica.Application.Repositories
 {

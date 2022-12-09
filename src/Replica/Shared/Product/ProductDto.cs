@@ -1,6 +1,6 @@
-﻿using Replica.Shared.Orders.Subcategory;
+﻿using Replica.Shared.Subcategory;
 
-namespace Replica.Shared.Orders.Product
+namespace Replica.Shared.Product
 {
     public class ProductDto : DtoBase
     {

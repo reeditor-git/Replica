@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Hookahs.HookahComponent
+﻿namespace Replica.Shared.HookahComponent
 {
     public class CreateHookahComponentDto
     {

@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Users.Registration
+﻿namespace Replica.Shared.Registration
 {
     public class RegistrationDto
     {

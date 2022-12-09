@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Orders.Category
+﻿namespace Replica.Shared.Category
 {
     public class ShortCategoryDto : DtoBase
     {

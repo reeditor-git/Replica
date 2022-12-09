@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories;
-using Replica.Shared.Orders.GameZone;
+using Replica.Shared.GameZone;
 
 namespace Replica.Server.Controllers
 {

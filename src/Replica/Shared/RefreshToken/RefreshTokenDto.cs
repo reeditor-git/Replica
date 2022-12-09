@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Users.RefreshToken
+﻿namespace Replica.Shared.RefreshToken
 {
     public class RefreshTokenDto
     {

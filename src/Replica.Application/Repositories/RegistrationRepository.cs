@@ -2,8 +2,8 @@
 using Replica.Application.Helpers;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
-using Replica.Shared.Users.Login;
-using Replica.Shared.Users.Registration;
+using Replica.Shared.Login;
+using Replica.Shared.Registration;
 using System.Security.Claims;
 
 namespace Replica.Application.Repositories

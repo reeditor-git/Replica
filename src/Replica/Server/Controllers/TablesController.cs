@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories;
-using Replica.Shared.Orders.Table;
+using Replica.Shared.Table;
 
 namespace Replica.Server.Controllers
 {

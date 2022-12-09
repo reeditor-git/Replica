@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Orders.Product
+﻿namespace Replica.Shared.Product
 {
     public class CreateProductDto
     {

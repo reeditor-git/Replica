@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Orders.GameZone
+﻿namespace Replica.Shared.GameZone
 {
     public class CreateGameZoneDto
     {

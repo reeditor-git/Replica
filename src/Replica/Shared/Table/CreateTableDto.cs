@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Orders.Table
+﻿namespace Replica.Shared.Table
 {
     public class CreateTableDto
     {

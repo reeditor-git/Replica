@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Hookahs.ComponentCategory
+﻿namespace Replica.Shared.ComponentCategory
 {
     public class CreateComponentCategoryDto
     {

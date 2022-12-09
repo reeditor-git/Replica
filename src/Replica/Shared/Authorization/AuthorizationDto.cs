@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Users.Authorization
+﻿namespace Replica.Shared.Authorization
 {
     public class AuthorizationDto
     {

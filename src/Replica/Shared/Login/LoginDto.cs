@@ -1,4 +1,4 @@
-﻿namespace Replica.Shared.Users.Login
+﻿namespace Replica.Shared.Login
 {
     public class LoginDto
     {

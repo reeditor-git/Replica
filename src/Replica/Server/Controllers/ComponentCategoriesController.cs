@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories;
-using Replica.Shared.Hookahs.ComponentCategory;
+using Replica.Shared.ComponentCategory;
 
 namespace Replica.Server.Controllers
 {

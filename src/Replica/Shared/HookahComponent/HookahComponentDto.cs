@@ -1,6 +1,6 @@
-﻿using Replica.Shared.Hookahs.ComponentCategory;
+﻿using Replica.Shared.ComponentCategory;
 
-namespace Replica.Shared.Hookahs.HookahComponent
+namespace Replica.Shared.HookahComponent
 {
     public class HookahComponentDto : DtoBase
     {

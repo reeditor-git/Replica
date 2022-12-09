@@ -1,9 +1,9 @@
-﻿using Replica.Shared.Hookahs.Hookah;
-using Replica.Shared.Orders.GameZone;
-using Replica.Shared.Orders.Product;
-using Replica.Shared.Orders.Table;
+﻿using Replica.Shared.Hookah;
+using Replica.Shared.GameZone;
+using Replica.Shared.Product;
+using Replica.Shared.Table;
 
-namespace Replica.Shared.Orders.Order
+namespace Replica.Shared.Order
 {
     public class OrderDto : DtoBase
     {

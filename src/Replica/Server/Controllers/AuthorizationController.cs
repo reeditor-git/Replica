@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories;
-using Replica.Shared.Users.Authorization;
-using Replica.Shared.Users.Login;
+using Replica.Shared.Authorization;
+using Replica.Shared.Login;
 
 namespace Replica.Server.Controllers
 {

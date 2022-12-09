@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Replica.Application.Repositories;
-using Replica.Shared.Orders.Product;
+using Replica.Shared.Product;
 
 namespace Replica.Server.Controllers
 {

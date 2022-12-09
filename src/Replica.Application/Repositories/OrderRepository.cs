@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Replica.Application.Exceptions;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
-using Replica.Shared.Orders.Order;
+using Replica.Shared.Order;
 
 namespace Replica.Application.Repositories
 {

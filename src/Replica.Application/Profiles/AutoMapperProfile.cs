@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Replica.Domain.Entities;
-using Replica.Shared.Hookahs.ComponentCategory;
-using Replica.Shared.Hookahs.Hookah;
-using Replica.Shared.Hookahs.HookahComponent;
-using Replica.Shared.Orders.Category;
-using Replica.Shared.Orders.GameZone;
-using Replica.Shared.Orders.Order;
-using Replica.Shared.Orders.Product;
-using Replica.Shared.Orders.Subcategory;
-using Replica.Shared.Orders.Table;
+using Replica.Shared.ComponentCategory;
+using Replica.Shared.Hookah;
+using Replica.Shared.HookahComponent;
+using Replica.Shared.Category;
+using Replica.Shared.GameZone;
+using Replica.Shared.Order;
+using Replica.Shared.Product;
+using Replica.Shared.Subcategory;
+using Replica.Shared.Table;
 
 namespace Replica.Application.Profiles
 {

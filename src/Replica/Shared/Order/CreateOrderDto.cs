@@ -1,7 +1,7 @@
-﻿using Replica.Shared.Hookahs.Hookah;
-using Replica.Shared.Orders.Product;
+﻿using Replica.Shared.Hookah;
+using Replica.Shared.Product;
 
-namespace Replica.Shared.Orders.Order
+namespace Replica.Shared.Order
 {
     public class CreateOrderDto
     {
