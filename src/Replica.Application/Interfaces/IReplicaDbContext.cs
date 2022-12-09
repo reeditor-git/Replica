@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Replica.Domain.Entities.Hookahs;
-using Replica.Domain.Entities.Orders;
-using Replica.Domain.Entities.Users;
+using Replica.Domain.Entities;
 
 namespace Replica.Application.Interfaces
 {
     public interface IReplicaDbContext
     {
         DbSet<User> Users { get; set; }
-        DbSet<UserRole> Roles { get; set; }
-        DbSet<UserRefreshToken> RefreshTokens { get; set; }
+        DbSet<Role> Roles { get; set; }
+        DbSet<RefreshToken> RefreshTokens { get; set; }
 
         DbSet<Order> Orders { get; set; }
         DbSet<Product> Products { get; set; }

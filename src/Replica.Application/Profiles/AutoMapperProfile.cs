@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Replica.Domain.Entities.Hookahs;
-using Replica.Domain.Entities.Orders;
+using Replica.Domain.Entities;
 using Replica.Shared.Hookahs.ComponentCategory;
 using Replica.Shared.Hookahs.Hookah;
 using Replica.Shared.Hookahs.HookahComponent;
@@ -17,36 +16,36 @@ namespace Replica.Application.Profiles
     {
         public AutoMapperProfile()
         {
-            CreateMap<ComponentCategory, ComponentCategoryDTO>();
-            CreateMap<ComponentCategoryDTO, ComponentCategory>();
-            CreateMap<ComponentCategory, ShortComponentCategoryDTO>();
-            CreateMap<ShortComponentCategoryDTO, ComponentCategory>();
+            CreateMap<ComponentCategory, ComponentCategoryDto>();
+            CreateMap<ComponentCategoryDto, ComponentCategory>();
+            CreateMap<ComponentCategory, ShortComponentCategoryDto>();
+            CreateMap<ShortComponentCategoryDto, ComponentCategory>();
 
-            CreateMap<Hookah, HookahDTO>();
-            CreateMap<HookahDTO, Hookah>();
+            CreateMap<Hookah, HookahDto>();
+            CreateMap<HookahDto, Hookah>();
 
-            CreateMap<HookahComponent, HookahComponentDTO>();
-            CreateMap<HookahComponentDTO, HookahComponent>();
+            CreateMap<HookahComponent, HookahComponentDto>();
+            CreateMap<HookahComponentDto, HookahComponent>();
 
-            CreateMap<Category, CategoryDTO>();
-            CreateMap<CategoryDTO, Category>();
-            CreateMap<Category, ShortCategoryDTO>();
-            CreateMap<ShortCategoryDTO, Category>();
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
+            CreateMap<Category, ShortCategoryDto>();
+            CreateMap<ShortCategoryDto, Category>();
 
-            CreateMap<GameZone, GameZoneDTO>();
-            CreateMap<GameZoneDTO, GameZone>();
+            CreateMap<GameZone, GameZoneDto>();
+            CreateMap<GameZoneDto, GameZone>();
 
-            CreateMap<Order, OrderDTO>();
-            CreateMap<OrderDTO, Order>();
+            CreateMap<Order, OrderDto>();
+            CreateMap<OrderDto, Order>();
 
-            CreateMap<Product, ProductDTO>();
-            CreateMap<ProductDTO, Product>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
 
-            CreateMap<Subcategory, SubcategoryDTO>();
-            CreateMap<SubcategoryDTO, Subcategory>();
+            CreateMap<Subcategory, SubcategoryDto>();
+            CreateMap<SubcategoryDto, Subcategory>();
 
-            CreateMap<Table, TableDTO>();
-            CreateMap<TableDTO, Table>();
+            CreateMap<Table, TableDto>();
+            CreateMap<TableDto, Table>();
         }
     }
 }

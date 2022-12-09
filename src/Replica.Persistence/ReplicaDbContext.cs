@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
-using Replica.Domain.Entities.Hookahs;
-using Replica.Domain.Entities.Orders;
-using Replica.Domain.Entities.Users;
+using Replica.Domain.Entities;
 
 namespace Replica.Persistence
 {
@@ -11,8 +9,8 @@ namespace Replica.Persistence
         public ReplicaDbContext(DbContextOptions<ReplicaDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> Roles { get; set; }
-        public DbSet<UserRefreshToken> RefreshTokens { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
