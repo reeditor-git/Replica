@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repositories;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Replica.Application.Interfaces;
 using Replica.Shared.Order;
 
 namespace Replica.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
-        protected readonly OrderRepository _repository;
-        public OrdersController(OrderRepository repository) =>
+        protected readonly IOrderRepository _repository;
+        public OrdersController(IOrderRepository repository) =>
             _repository = repository;
 
         [HttpPost]

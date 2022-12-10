@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Replica.Application.Interfaces;
-using Replica.Application.Profiles;
-using Replica.Application.Repositories;
 using Replica.Persistence;
+using Replica.Server.Infrastructure.Repositories;
 using Replica.Server.Middleware;
+using Replica.Server.Profiles;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -50,23 +50,23 @@ namespace Replica
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-            builder.Services.AddScoped<ComponentCategoryRepository>();
-            builder.Services.AddScoped<HookahComponentRepository>();
-            builder.Services.AddScoped<HookahRepository>();
+            builder.Services.AddScoped<IComponentCategoryRepository, ComponentCategoryRepository>();
+            builder.Services.AddScoped<IHookahComponentRepository, HookahComponentRepository>();
+            builder.Services.AddScoped<IHookahRepository, HookahRepository>();
 
-            builder.Services.AddScoped<CategoryRepository>();
-            builder.Services.AddScoped<GameZoneRepository>();
-            builder.Services.AddScoped<OrderRepository>();
-            builder.Services.AddScoped<ProductRepository>();
-            builder.Services.AddScoped<SubcategoryRepository>();
-            builder.Services.AddScoped<TableRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IGameZoneRepository, GameZoneRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
+            builder.Services.AddScoped<ITableRepository, TableRepository>();
 
-            builder.Services.AddScoped<AuthorizationRepository>();
+            builder.Services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
             builder.Services.AddScoped<RefreshTokenRepository>();
-            builder.Services.AddScoped<RegistrationRepository>();
+            builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddRazorPages();
+            builder.Services.AddControllers();
+            //builder.Services.AddRazorPages();
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -81,7 +81,9 @@ namespace Replica
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
-                var app = builder.Build();
+            builder.Services.AddRouting(x => x.LowercaseUrls = true);
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -113,7 +115,7 @@ namespace Replica
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapRazorPages();
+            //app.MapRazorPages();
             app.MapControllers();
             app.MapFallbackToFile("index.html");
 

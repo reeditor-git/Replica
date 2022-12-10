@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.Product;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class ProductRepository : RepositoryBase
+    public class ProductRepository : RepositoryBase, IProductRepository
     {
         public ProductRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

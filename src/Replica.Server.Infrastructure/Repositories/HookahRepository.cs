@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.Hookah;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class HookahRepository : RepositoryBase
+    public class HookahRepository : RepositoryBase, IHookahRepository
     {
         public HookahRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

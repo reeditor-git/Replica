@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.ComponentCategory;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class ComponentCategoryRepository : RepositoryBase
+    public class ComponentCategoryRepository : RepositoryBase, IComponentCategoryRepository
     {
         public ComponentCategoryRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

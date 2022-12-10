@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Replica.Application.Interfaces;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
     public abstract class RepositoryBase
     {

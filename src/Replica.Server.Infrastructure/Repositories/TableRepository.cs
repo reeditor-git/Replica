@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.Table;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class TableRepository : RepositoryBase
+    public class TableRepository : RepositoryBase, ITableRepository
     {
         public TableRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

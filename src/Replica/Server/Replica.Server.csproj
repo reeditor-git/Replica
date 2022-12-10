@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Replica.Application\Replica.Application.csproj" />
     <ProjectReference Include="..\..\Replica.Domain\Replica.Domain.csproj" />
     <ProjectReference Include="..\..\Replica.Persistence\Replica.Persistence.csproj" />
+    <ProjectReference Include="..\..\Replica.Server.Infrastructure\Replica.Server.Infrastructure.csproj" />
     <ProjectReference Include="..\Client\Replica.Client.csproj" />
     <ProjectReference Include="..\Shared\Replica.Shared.csproj" />
   </ItemGroup>

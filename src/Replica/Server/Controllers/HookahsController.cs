@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repositories;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Replica.Application.Interfaces;
 using Replica.Shared.Hookah;
 
 namespace Replica.Server.Controllers
@@ -8,15 +9,17 @@ namespace Replica.Server.Controllers
     [Route("api/[controller]")]
     public class HookahsController : ControllerBase
     {
-        private readonly HookahRepository _repository;
-        public HookahsController(HookahRepository repository) =>
+        private readonly IHookahRepository _repository;
+        public HookahsController(IHookahRepository repository) =>
             _repository = repository;
 
         [HttpPost]
+        [Authorize]
         public async Task<HookahDto> Create(CreateHookahDto entity) =>
             await _repository.Create(entity);
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<HookahDto> Delete(Guid id) =>
             await _repository.Delete(id);
 
@@ -29,6 +32,7 @@ namespace Replica.Server.Controllers
             await _repository.GetAll();
 
         [HttpPut]
+        [Authorize]
         public async Task<HookahDto> Update(HookahDto entity) =>
             await _repository.Update(entity);
     }

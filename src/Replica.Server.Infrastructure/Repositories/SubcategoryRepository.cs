@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.Subcategory;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class SubcategoryRepository : RepositoryBase
+    public class SubcategoryRepository : RepositoryBase, ISubcategoryRepository
     {
         public SubcategoryRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

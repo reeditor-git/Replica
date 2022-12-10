@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Replica.Application.Exceptions;
-using Replica.Application.Helpers;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
+using Replica.Server.Infrastructure.Helpers;
 using Replica.Shared.Authorization;
 using Replica.Shared.Login;
 using System.Security.Claims;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class AuthorizationRepository : RepositoryBase
+    public class AuthorizationRepository : RepositoryBase, IAuthorizationRepository
     {
         public AuthorizationRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

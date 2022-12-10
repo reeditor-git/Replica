@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repositories;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Replica.Application.Interfaces;
 using Replica.Shared.Table;
 
 namespace Replica.Server.Controllers
@@ -8,15 +9,17 @@ namespace Replica.Server.Controllers
     [Route("api/[controller]")]
     public class TablesController : ControllerBase
     {
-        protected readonly TableRepository _repository;
-        public TablesController(TableRepository repository) =>
+        protected readonly ITableRepository _repository;
+        public TablesController(ITableRepository repository) =>
             _repository = repository;
 
         [HttpPost]
+        [Authorize]
         public async Task<TableDto> Create(CreateTableDto entity) =>
             await _repository.Create(entity);
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<TableDto> Delete(Guid id) =>
             await _repository.Delete(id);
 
@@ -37,6 +40,7 @@ namespace Replica.Server.Controllers
             await _repository.GetAllUnavailable();
 
         [HttpPut]
+        [Authorize]
         public async Task<TableDto> Update(TableDto entity) =>
             await _repository.Update(entity);
     }

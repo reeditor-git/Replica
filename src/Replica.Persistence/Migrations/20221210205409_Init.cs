@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Replica.Persistence.Migrations
 {
     /// <inheritdoc />
@@ -17,6 +19,7 @@ namespace Replica.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -30,6 +33,7 @@ namespace Replica.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -58,7 +62,8 @@ namespace Replica.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,6 +92,7 @@ namespace Replica.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -106,14 +112,14 @@ namespace Replica.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Nickname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Nickname = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "*/Image/User/default-user-image.jpg")
                 },
                 constraints: table =>
                 {
@@ -135,7 +141,9 @@ namespace Replica.Persistence.Migrations
                     TableId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     GameZoneId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Paid = table.Column<bool>(type: "bit", nullable: false)
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<bool>(type: "bit", nullable: false),
+                    Accepted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -163,9 +171,9 @@ namespace Replica.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,6 +260,20 @@ namespace Replica.Persistence.Migrations
                         principalTable: "Hookahs",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("2bb5984d-3ff9-49c3-9e54-5dcff385fb98"), "Manager", "manager" },
+                    { new Guid("6fa17fba-626d-481c-81cd-bbda29109fab"), "Admin", "admin" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "Image", "LastName", "Nickname", "Password", "Phone", "RoleId" },
+                values: new object[] { new Guid("d4e6d597-950b-4d87-b568-9ce087f3c79f"), "admin@replica.com", "Admin", "*/Image/User/default-user-image.jpg", "Replica", "Reeditor", "admin", "0975440309", new Guid("6fa17fba-626d-481c-81cd-bbda29109fab") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_HookahComponents_CategoryId",

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repositories;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Replica.Application.Interfaces;
 using Replica.Shared.ComponentCategory;
 
 namespace Replica.Server.Controllers
@@ -8,15 +9,17 @@ namespace Replica.Server.Controllers
     [Route("api/[controller]")]
     public class ComponentCategoriesController : ControllerBase
     {
-        private readonly ComponentCategoryRepository _repository;
-        public ComponentCategoriesController(ComponentCategoryRepository repository) =>
+        private readonly IComponentCategoryRepository _repository;
+        public ComponentCategoriesController(IComponentCategoryRepository repository) =>
             _repository = repository;
 
         [HttpPost]
+        [Authorize]
         public async Task<ShortComponentCategoryDto> Create(CreateComponentCategoryDto entity) =>
             await _repository.Create(entity);
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ShortComponentCategoryDto> Delete(Guid id) =>
             await _repository.Delete(id);
 
@@ -33,6 +36,7 @@ namespace Replica.Server.Controllers
             await _repository.GetAllShort();
 
         [HttpPut]
+        [Authorize]
         public async Task<ShortComponentCategoryDto> Update(ShortComponentCategoryDto entity) =>
             await _repository.Update(entity);
     }

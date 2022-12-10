@@ -10,6 +10,8 @@
 
         public string Image { get; set; }
 
+        public Guid CategoryId { get; set; }
+
         public ComponentCategory Category { get; set; }
     }
 }

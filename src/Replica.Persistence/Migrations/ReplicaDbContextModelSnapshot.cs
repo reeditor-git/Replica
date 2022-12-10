@@ -22,11 +22,38 @@ namespace Replica.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.ComponentCategory", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.ComponentCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -41,7 +68,36 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("ComponentCategories");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.Hookah", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.GameZone", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SeatingCapacity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameZones");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Hookah", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +120,7 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("Hookahs");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.HookahComponent", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.HookahComponent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -100,62 +156,20 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("HookahComponents");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Category", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.GameZone", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Available")
+                    b.Property<bool>("Accepted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SeatingCapacity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GameZones");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("GameZoneId")
                         .HasColumnType("uniqueidentifier");
@@ -180,7 +194,7 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Product", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -216,7 +230,64 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Subcategory", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6fa17fba-626d-481c-81cd-bbda29109fab"),
+                            Description = "Admin",
+                            Name = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("2bb5984d-3ff9-49c3-9e54-5dcff385fb98"),
+                            Description = "Manager",
+                            Name = "manager"
+                        });
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Subcategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -224,6 +295,10 @@ namespace Replica.Persistence.Migrations
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -240,7 +315,7 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("Subcategories");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Table", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Table", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,7 +343,7 @@ namespace Replica.Persistence.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Users.User", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -276,23 +351,29 @@ namespace Replica.Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("*/Image/User/default-user-image.jpg");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Nickname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -300,7 +381,8 @@ namespace Replica.Persistence.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
@@ -310,79 +392,55 @@ namespace Replica.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d4e6d597-950b-4d87-b568-9ce087f3c79f"),
+                            Email = "admin@replica.com",
+                            FirstName = "Admin",
+                            Image = "*/Image/User/default-user-image.jpg",
+                            LastName = "Replica",
+                            Nickname = "Reeditor",
+                            Password = "admin",
+                            Phone = "0975440309",
+                            RoleId = new Guid("6fa17fba-626d-481c-81cd-bbda29109fab")
+                        });
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Users.UserRefreshToken", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Hookah", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RefreshToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Users.UserRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.Hookah", b =>
-                {
-                    b.HasOne("Replica.Domain.Entities.Orders.Order", null)
+                    b.HasOne("Replica.Domain.Entities.Order", null)
                         .WithMany("Hookahs")
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.HookahComponent", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.HookahComponent", b =>
                 {
-                    b.HasOne("Replica.Domain.Entities.Hookahs.ComponentCategory", "Category")
+                    b.HasOne("Replica.Domain.Entities.ComponentCategory", "Category")
                         .WithMany("Components")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Replica.Domain.Entities.Hookahs.Hookah", null)
+                    b.HasOne("Replica.Domain.Entities.Hookah", null)
                         .WithMany("Components")
                         .HasForeignKey("HookahId");
 
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Replica.Domain.Entities.Orders.GameZone", "GameZone")
+                    b.HasOne("Replica.Domain.Entities.GameZone", "GameZone")
                         .WithMany()
                         .HasForeignKey("GameZoneId");
 
-                    b.HasOne("Replica.Domain.Entities.Orders.Table", "Table")
+                    b.HasOne("Replica.Domain.Entities.Table", "Table")
                         .WithMany()
                         .HasForeignKey("TableId");
 
-                    b.HasOne("Replica.Domain.Entities.Users.User", "User")
+                    b.HasOne("Replica.Domain.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -395,13 +453,13 @@ namespace Replica.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Product", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("Replica.Domain.Entities.Orders.Order", null)
+                    b.HasOne("Replica.Domain.Entities.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("Replica.Domain.Entities.Orders.Subcategory", "Subcategory")
+                    b.HasOne("Replica.Domain.Entities.Subcategory", "Subcategory")
                         .WithMany("Products")
                         .HasForeignKey("SubcategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -410,31 +468,9 @@ namespace Replica.Persistence.Migrations
                     b.Navigation("Subcategory");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Subcategory", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("Replica.Domain.Entities.Orders.Category", "Category")
-                        .WithMany("Subcategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Users.User", b =>
-                {
-                    b.HasOne("Replica.Domain.Entities.Users.UserRole", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Users.UserRefreshToken", b =>
-                {
-                    b.HasOne("Replica.Domain.Entities.Users.User", "User")
+                    b.HasOne("Replica.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -443,41 +479,63 @@ namespace Replica.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.ComponentCategory", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Subcategory", b =>
                 {
-                    b.Navigation("Components");
+                    b.HasOne("Replica.Domain.Entities.Category", "Category")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Hookahs.Hookah", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Components");
+                    b.HasOne("Replica.Domain.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Category", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Subcategories");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.ComponentCategory", b =>
+                {
+                    b.Navigation("Components");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Hookah", b =>
+                {
+                    b.Navigation("Components");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Order", b =>
                 {
                     b.Navigation("Hookahs");
 
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Orders.Subcategory", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Replica.Domain.Entities.Subcategory", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Replica.Domain.Entities.Users.User", b =>
+            modelBuilder.Entity("Replica.Domain.Entities.User", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Replica.Domain.Entities.Users.UserRole", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

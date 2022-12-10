@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.GameZone;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class GameZoneRepository : RepositoryBase
+    public class GameZoneRepository : RepositoryBase, IGameZoneRepository
     {
         public GameZoneRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

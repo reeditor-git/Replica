@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Replica.Application.Helpers
+namespace Replica.Server.Infrastructure.Helpers
 {
     internal static class AuthHelpers
     {

@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repositories;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Replica.Application.Interfaces;
 
 namespace Replica.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     public class RolesController : ControllerBase
     {
-        private readonly RegistrationRepository _repository;
-        public RolesController(RegistrationRepository repository) =>
+        private readonly IRegistrationRepository _repository;
+        public RolesController(IRegistrationRepository repository) =>
             _repository = repository;
 
         [HttpPost]

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Replica.Application.Repositories;
+using Replica.Application.Interfaces;
 using Replica.Shared.Login;
 using Replica.Shared.Registration;
 
@@ -11,8 +11,8 @@ namespace Replica.Server.Controllers
     {
         private readonly string _secret;
 
-        private readonly RegistrationRepository _repository;
-        public RegistrationController(IConfiguration config, RegistrationRepository repository) =>
+        private readonly IRegistrationRepository _repository;
+        public RegistrationController(IConfiguration config, IRegistrationRepository repository) =>
             (_secret, _repository) = (config.GetValue<string>("Secret"), repository);
 
         [HttpPost("regist")]

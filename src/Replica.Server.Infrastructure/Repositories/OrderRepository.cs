@@ -5,9 +5,9 @@ using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Shared.Order;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class OrderRepository : RepositoryBase
+    public class OrderRepository : RepositoryBase, IOrderRepository
     {
         public OrderRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

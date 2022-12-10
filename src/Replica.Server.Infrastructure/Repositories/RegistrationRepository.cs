@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Replica.Application.Helpers;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
+using Replica.Server.Infrastructure.Helpers;
 using Replica.Shared.Login;
 using Replica.Shared.Registration;
 using System.Security.Claims;
 
-namespace Replica.Application.Repositories
+namespace Replica.Server.Infrastructure.Repositories
 {
-    public class RegistrationRepository : RepositoryBase
+    public class RegistrationRepository : RepositoryBase, IRegistrationRepository
     {
         public RegistrationRepository(IReplicaDbContext dbContext, IMapper mapper)
             : base(dbContext, mapper) { }

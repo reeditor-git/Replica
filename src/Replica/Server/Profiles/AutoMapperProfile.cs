@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using Replica.Domain.Entities;
+using Replica.Shared.Category;
 using Replica.Shared.ComponentCategory;
+using Replica.Shared.GameZone;
 using Replica.Shared.Hookah;
 using Replica.Shared.HookahComponent;
-using Replica.Shared.Category;
-using Replica.Shared.GameZone;
 using Replica.Shared.Order;
 using Replica.Shared.Product;
 using Replica.Shared.Subcategory;
 using Replica.Shared.Table;
 
-namespace Replica.Application.Profiles
+namespace Replica.Server.Profiles
 {
     public class AutoMapperProfile : Profile
     {
