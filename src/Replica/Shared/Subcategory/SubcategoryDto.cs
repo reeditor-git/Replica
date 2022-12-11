@@ -11,7 +11,7 @@ namespace Replica.Shared.Subcategory
 
         public string Icon { get; set; }
 
-        public CategoryDto Category { get; set; }
+        public Guid CategoryId { get; set; }
 
         public ICollection<ProductDto>? Products { get; set; }
     }

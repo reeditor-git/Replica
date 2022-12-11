@@ -17,6 +17,7 @@ namespace Replica.Server.Infrastructure.Repositories
             var componentCategory = new ComponentCategory()
             {
                 Name = entity.Name,
+                Description = entity.Description,
                 Icon = entity.Icon
             };
 
@@ -51,7 +52,8 @@ namespace Replica.Server.Infrastructure.Repositories
         public async Task<IEnumerable<ComponentCategoryDto>> GetAll()
         {
             IEnumerable<ComponentCategory>
-                componentCategorys = await _dbContext.ComponentCategories.ToListAsync();
+                componentCategorys = await _dbContext.ComponentCategories
+                .Include(x => x.Components).ToListAsync();
 
             return _mapper.Map<IEnumerable<ComponentCategoryDto>>(componentCategorys);
         }
@@ -70,6 +72,7 @@ namespace Replica.Server.Infrastructure.Repositories
                 ?? throw new NotFoundException(nameof(ComponentCategory), entity.Id);
 
             componentCategory.Name = entity.Name;
+            componentCategory.Description = entity.Description;
             componentCategory.Icon = entity.Icon;
 
             await _dbContext.SaveChangesAsync();

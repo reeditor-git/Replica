@@ -16,34 +16,43 @@ namespace Replica.Server.Profiles
     {
         public AutoMapperProfile()
         {
-            CreateMap<ComponentCategory, ComponentCategoryDto>();
-            CreateMap<ComponentCategoryDto, ComponentCategory>();
-            CreateMap<ComponentCategory, ShortComponentCategoryDto>();
-            CreateMap<ShortComponentCategoryDto, ComponentCategory>();
-
-            CreateMap<Hookah, HookahDto>();
-            CreateMap<HookahDto, Hookah>();
-
-            CreateMap<HookahComponent, HookahComponentDto>();
-            CreateMap<HookahComponentDto, HookahComponent>();
-
+            //Category
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
             CreateMap<Category, ShortCategoryDto>();
             CreateMap<ShortCategoryDto, Category>();
 
+            //ComponentCategory
+            CreateMap<ComponentCategory, ComponentCategoryDto>();
+            CreateMap<ComponentCategoryDto, ComponentCategory>();
+            CreateMap<ComponentCategory, ShortComponentCategoryDto>();
+            CreateMap<ShortComponentCategoryDto, ComponentCategory>();
+
+            //GameZone
             CreateMap<GameZone, GameZoneDto>();
             CreateMap<GameZoneDto, GameZone>();
 
+            //HookahComponent
+            CreateMap<HookahComponent, HookahComponentDto>();
+            CreateMap<HookahComponentDto, HookahComponent>();
+
+            //Hookah
+            CreateMap<Hookah, HookahDto>();
+            CreateMap<HookahDto, Hookah>();
+
+            //Order
             CreateMap<Order, OrderDto>();
             CreateMap<OrderDto, Order>();
 
+            //Product
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
 
+            //Subcategory
             CreateMap<Subcategory, SubcategoryDto>();
             CreateMap<SubcategoryDto, Subcategory>();
 
+            //Table
             CreateMap<Table, TableDto>();
             CreateMap<TableDto, Table>();
         }

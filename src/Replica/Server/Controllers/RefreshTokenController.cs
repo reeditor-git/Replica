@@ -9,12 +9,14 @@ namespace Replica.Server.Controllers
     [Route("api/[controller]")]
     public class RefreshTokenController : Controller
     {
+        private readonly string _secret;
+
         protected readonly IRefreshTokenRepository _repository;
-        public RefreshTokenController(IRefreshTokenRepository repository) =>
-            _repository = repository;
+        public RefreshTokenController(IConfiguration config, IRefreshTokenRepository repository) =>
+            (_secret, _repository) = (config.GetValue<string>("Secret"), repository);
 
         [HttpPost]
-        public async Task<RefreshTokenDto> Refresh(RefreshTokenDto entity, string secret) => 
-            await _repository.Refresh(entity, secret);
+        public async Task<RefreshTokenDto> Refresh(RefreshTokenDto entity) => 
+            await _repository.Refresh(entity, _secret);
     }
 }

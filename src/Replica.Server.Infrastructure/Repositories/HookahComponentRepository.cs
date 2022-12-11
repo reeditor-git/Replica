@@ -52,7 +52,8 @@ namespace Replica.Server.Infrastructure.Repositories
         public async Task<IEnumerable<HookahComponentDto>> GetAll()
         {
             IEnumerable<HookahComponent>
-                hookahComponent = await _dbContext.HookahComponents.ToListAsync();
+                hookahComponent = await _dbContext.HookahComponents
+                .Include(x => x.Category).ToListAsync();
 
             return _mapper.Map<IEnumerable<HookahComponentDto>>(hookahComponent);
         }
@@ -66,8 +67,8 @@ namespace Replica.Server.Infrastructure.Repositories
             hookahComponent.Price = entity.Price;
             hookahComponent.Description = entity.Description;
             hookahComponent.Image = entity.Image;
-            hookahComponent.Category = await _dbContext.ComponentCategories.FindAsync(entity.Category.Id)
-                ?? throw new NotFoundException(nameof(ComponentCategory), entity.Category.Id);
+            hookahComponent.Category = await _dbContext.ComponentCategories.FindAsync(entity.CategoryId)
+                ?? throw new NotFoundException(nameof(ComponentCategory), entity.CategoryId);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<HookahComponentDto>(hookahComponent);

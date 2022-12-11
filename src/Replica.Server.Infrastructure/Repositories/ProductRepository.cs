@@ -62,8 +62,8 @@ namespace Replica.Server.Infrastructure.Repositories
             product.Name = entity.Name;
             product.Description = entity.Description;
             product.Price = entity.Price;
-            product.Subcategory = await _dbContext.Subcategories.FindAsync(entity.Subcategory.Id)
-                ?? throw new NotFoundException(nameof(Subcategory), entity.Subcategory.Id);
+            product.Subcategory = await _dbContext.Subcategories.FindAsync(entity.SubcategoryId)
+                ?? throw new NotFoundException(nameof(Subcategory), entity.SubcategoryId);
 
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<ProductDto>(product);

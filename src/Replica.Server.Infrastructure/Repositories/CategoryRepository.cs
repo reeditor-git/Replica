@@ -23,7 +23,7 @@ namespace Replica.Server.Infrastructure.Repositories
 
             await _dbContext.Categories.AddAsync(category);
             await _dbContext.SaveChangesAsync();
-            return _mapper.Map<ShortCategoryDto>(entity);
+            return _mapper.Map<ShortCategoryDto>(category);
         }
 
         public async Task<ShortCategoryDto> Delete(Guid id)
@@ -56,7 +56,8 @@ namespace Replica.Server.Infrastructure.Repositories
 
         public async Task<IEnumerable<CategoryDto>> GetAll()
         {
-            IEnumerable<Category> categories = await _dbContext.Categories.ToListAsync();
+            IEnumerable<Category> categories = await _dbContext.Categories
+                .Include(x => x.Subcategories).ToListAsync();
 
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
@@ -74,6 +75,7 @@ namespace Replica.Server.Infrastructure.Repositories
                 ?? throw new NotFoundException(nameof(Category), entity.Id);
 
             category.Name = entity.Name;
+            category.Description = entity.Description;
             category.Icon = entity.Icon;
 
             await _dbContext.SaveChangesAsync();

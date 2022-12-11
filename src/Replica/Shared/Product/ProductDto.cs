@@ -10,7 +10,7 @@ namespace Replica.Shared.Product
 
         public decimal Price { get; set; }
 
-        public SubcategoryDto? Subcategory { get; set; }
+        public Guid SubcategoryId { get; set; }
 
         public string Image { get; set; }
     }

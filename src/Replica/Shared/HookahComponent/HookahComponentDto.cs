@@ -12,6 +12,6 @@ namespace Replica.Shared.HookahComponent
 
         public string Image { get; set; }
 
-        public ShortComponentCategoryDto Category { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }
