@@ -17,6 +17,7 @@ namespace Replica.Server.Infrastructure.Repositories
             var category = new Category()
             {
                 Name = entity.Name,
+                Description = entity.Description,
                 Icon = entity.Icon
             };
 

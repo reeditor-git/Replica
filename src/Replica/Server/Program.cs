@@ -62,7 +62,7 @@ namespace Replica
             builder.Services.AddScoped<ITableRepository, TableRepository>();
 
             builder.Services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
-            builder.Services.AddScoped<RefreshTokenRepository>();
+            builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 
             builder.Services.AddControllers();

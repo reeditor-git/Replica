@@ -15,7 +15,7 @@ namespace Replica.Server.Controllers
         public AuthorizationController(IConfiguration config, IAuthorizationRepository repository) =>
             (_secret, _repository) = (config.GetValue<string>("Secret"), repository);
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<LoginDto> Login(AuthorizationDto auth) =>
             await _repository.Login(auth, _secret);
     }

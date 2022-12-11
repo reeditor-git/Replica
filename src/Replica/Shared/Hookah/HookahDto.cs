@@ -6,6 +6,8 @@ namespace Replica.Shared.Hookah
     {
         public bool AdditionalHose { get; set; }
 
+        public decimal Price { get; set; }
+
         public string Image { get; set; }
 
         public ICollection<HookahComponentDto> Components { get; set; }

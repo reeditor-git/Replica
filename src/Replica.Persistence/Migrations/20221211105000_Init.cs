@@ -266,8 +266,12 @@ namespace Replica.Persistence.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("2bb5984d-3ff9-49c3-9e54-5dcff385fb98"), "Manager", "manager" },
-                    { new Guid("6fa17fba-626d-481c-81cd-bbda29109fab"), "Admin", "admin" }
+                    { new Guid("0ba5721c-bf18-47f9-be9d-f0f1eb69434a"), "Responsible for the bar.", "barman" },
+                    { new Guid("1057c418-d34a-46ea-9e7b-b1dffd462a05"), "An ordinary user of the system, a client.", "user" },
+                    { new Guid("2bb5984d-3ff9-49c3-9e54-5dcff385fb98"), "The management staff of the lounge bar.", "manager" },
+                    { new Guid("2f9d9d3f-a8f3-4916-a904-5d325bac45ec"), "Responsible for preparing hookah orders.", "hookah-waiter" },
+                    { new Guid("6fa17fba-626d-481c-81cd-bbda29109fab"), "The main user of the system, with all access rights.", "admin" },
+                    { new Guid("e4821f82-1182-4bf1-a74a-d390d2c040d6"), "Staff who form orders and serve meals to visitors.", "waiter" }
                 });
 
             migrationBuilder.InsertData(

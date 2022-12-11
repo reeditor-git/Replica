@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
+using System.Xml;
 
 namespace Replica.Persistence
 {
@@ -25,6 +26,11 @@ namespace Replica.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<HookahComponent>().Property(p => p.Price).HasColumnType("decimal(10,2)");
+            modelBuilder.Entity<Order>().Property(p => p.Cost).HasColumnType("decimal(10,2)");
+            modelBuilder.Entity<Product>().Property(p => p.Price).HasColumnType("decimal(10,2)");
+            modelBuilder.Entity<Hookah>().Property(p => p.Price).HasColumnType("decimal(10,2)");
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReplicaDbContext).Assembly);
         }
     }

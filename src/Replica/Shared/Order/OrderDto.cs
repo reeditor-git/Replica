@@ -19,6 +19,10 @@ namespace Replica.Shared.Order
 
         public string? Comment { get; set; }
 
+        public decimal Cost { get; set; }
+
         public bool Paid { get; set; }
+
+        public bool Accepted { get; set; }
     }
 }

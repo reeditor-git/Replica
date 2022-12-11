@@ -15,7 +15,7 @@ namespace Replica.Server.Controllers
         public RegistrationController(IConfiguration config, IRegistrationRepository repository) =>
             (_secret, _repository) = (config.GetValue<string>("Secret"), repository);
 
-        [HttpPost("regist")]
+        [HttpPost]
         public async Task<LoginDto> Registration(RegistrationDto registr) =>
             await _repository.Registration(registr, _secret);
     }

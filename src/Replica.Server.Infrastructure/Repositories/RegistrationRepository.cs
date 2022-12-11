@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityModel;
 using Replica.Application.Interfaces;
 using Replica.Domain.Entities;
 using Replica.Server.Infrastructure.Helpers;
@@ -24,13 +25,13 @@ namespace Replica.Server.Infrastructure.Repositories
                 Email = registr.Email,
                 Password = registr.Password,
                 Image = registr.Image,
-                Role = _dbContext.Roles.First(x => x.Name == "User")
+                Role = _dbContext.Roles.First(x => x.Name == "user")
             };
 
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, newUser.Id.ToString()),
-                new Claim(ClaimTypes.Role, newUser.Role.Name),
-                new Claim(ClaimTypes.Name, newUser.Nickname)
+                new Claim(JwtClaimTypes.Id, newUser.Id.ToString()),
+                new Claim(JwtClaimTypes.NickName, newUser.Nickname),
+                new Claim(JwtClaimTypes.Role, newUser.Role.Name)
             };
 
             var token = AuthHelpers.GenerateToken(secret, claims);
